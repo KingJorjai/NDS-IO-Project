@@ -51,7 +51,21 @@ void juego()
 		
       /*******************************EN LA 1.ACTIVIDAD*****************************************/
 		/* Si el estado es ESPERA: codificar aquí la encuesta del teclado, sacar por pantalla la tecla que se ha pulsado, y si se pulsa la tecla START cambiar de estado */
+	
+		if (ESTADO==ESPERA && TeclaDetectada()) {
+		
+			tecla = TeclaPulsada();
 
+			iprintf("\x1b[12;0HLa tecla pulsada es: %d", tecla);
+			
+			if (tecla == START) {
+
+				iprintf("\x1b[14;0HCambia de estadio");
+
+				visualizarPuerta();
+				ESTADO = CERRADA;
+			}
+		}
 
 
 	}

@@ -25,7 +25,21 @@ int TeclaPulsada()
 	// Devuelve el código de la tecla pulsada utilizando para ello las constantes definidas en 
 	// definiciones.h:  A=0;B=1;SELECT=2;START=3;IZQUIERDA=4;DERECHA=5;
 	// ARRIBA=6;ABAJO=7;R=8;L=9;
-
+	
+	// Comprobar A
+	if ( (~TECLAS_DAT & 0x0001)!=0) return A;
+	if ( (~TECLAS_DAT & 0x0002)!=0) return B;
+	if ( (~TECLAS_DAT & 0x0004)!=0) return SELECT;
+	if ( (~TECLAS_DAT & 0x0008)!=0) return START;
+	if ( (~TECLAS_DAT & 0x0010)!=0) return IZQUIERDA;
+	if ( (~TECLAS_DAT & 0x0020)!=0) return DERECHA;
+	if ( (~TECLAS_DAT & 0x0040)!=0) return ARRIBA;
+	if ( (~TECLAS_DAT & 0x0080)!=0) return ABAJO;
+	if ( (~TECLAS_DAT & 0x0100)!=0) return R;
+	if ( (~TECLAS_DAT & 0x0200)!=0) return L;
+	
+	// kienkojonesapulsaounatekla
+	return -1;
 }
 
 void ConfigurarTeclado(int Conf_Tec)
@@ -40,7 +54,6 @@ void ConfigurarTemporizador(int Latch, int Conf_Tempo)
 	// Configuración del temporizador. El latch es el valor del registro de datos del temporizador
         // Activar los bits del registro de control necesarios en base a los bits activados en el parámetro Conf_Tempo
 
-	
 }
 
 void HabilitarIntTeclado()

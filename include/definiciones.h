@@ -36,7 +36,7 @@ touchPosition PANT_DAT;
 #define B			1
 #define SELECT			2 
 #define START			3
-#define DERECHA		4 
+#define DERECHA			4 
 #define IZQUIERDA		5
 #define ARRIBA			6 
 #define ABAJO			7
