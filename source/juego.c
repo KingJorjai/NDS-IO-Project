@@ -16,55 +16,77 @@ y en otro ejemplo de Jaeden Ameronen
 #include "rutinasAtencion.h"
 #include "fondos.h"
 
-int tiempo;
+// Variables globales
+	int tiempo;	// ¿Esta de dónde sale?
+	int seg;	// Rutina Ktimer0 - Escribir cuántos segundos han pasado
 
 void juego()
 {	
 	// Definiciones de variables
-	int i=9;
-	int tecla=0;;
+	int tecla = 0;
 
+	// Estado inicial
 	ESTADO=ESPERA;
 	
-	// Escribe en la fila 22 columna 5 de la pantalla	
-	iprintf("\x1b[22;5HProbando la pantalla de texto");						
+	// Configuración interrupciones
+		
+		// Interrupt Patcher
+		EstablecerVectorInt();
+		
+		// Temporizador
+			// Activar temporizador			---> Bit 7
+			// Generar interrupción al desbordar	---> Bit 6
+			// División de frecuencia: 1024		---> Bits 1,0
+			int conf_Tempo	= 0x00C3;	// 0000000011000011
+			int latch 	= 58982; 	// 5 interrupciones por segundo
+			ConfigurarTemporizador(latch, conf_Tempo);
+			HabilitarIntTempo();
+		// Teclado
+			// Activar interrupciones por parte de la tecla A ---> Bit 0
+			// Activar interrupciones por parte del teclado   ---> Bit 14
+			int conf_Tec	= 0x4001;	// 0100000000000001
+			ConfigurarTeclado(conf_Tec);
+			HabilitarIntTeclado();
 
-/* Si se quiere visualizar el valor de una variable escribir %d dentro de las comillas y el nombre de la variable fuera de las comillas */
-	iprintf("\x1b[23;5HProbando la escritura con variable. Valor=%d", i);
-	visualizarFondoUno();
-
-	//*******************************EN LA 2.ACTIVIDAD ********************************//
-        // LLAMADAS A REALIZAR:
-	// Configurar el teclado.
-	// Configurar el temporizador.
-	// Establecer las rutinas de atención a interrupciones
-	// Habilitar las interrupciones del teclado.
-	// Habilitar las interrupciones del temporizador.
-	// Habilitar interrupciones.
-	//******************************************************************************//
-
-	
-
-
+	// Bucle principal del juego
 	while(1)
 	{	
-		
-      /*******************************EN LA 1.ACTIVIDAD*****************************************/
-		/* Si el estado es ESPERA: codificar aquí la encuesta del teclado, sacar por pantalla la tecla que se ha pulsado, y si se pulsa la tecla START cambiar de estado */
-	
-		if (ESTADO==ESPERA && TeclaDetectada()) {
-		
-			tecla = TeclaPulsada();
-
-			iprintf("\x1b[12;0HLa tecla pulsada es: %d", tecla);
+		// Autómata
+		switch (ESTADO)
+		{
+			case ESPERA:
+				
+				// Encuesta del teclado
+				if (TeclaDetectada())
+				{
+					// Ktec: <tecla>
+					
+						// Visualizar(tecla)
+						tecla = TeclaPulsada();
+						iprintf("\x1b[12;0HLa tecla pulsada es: %d", tecla);
+					
+					// Ktec: <START>
+					if (tecla == START)
+					{
+						visualizarPuerta();
+						PonerEnMarchaTempo();
+						seg=0;
+						ESTADO = CERRADA;
+					}
+				}
+				break;
 			
-			if (tecla == START) {
-
-				iprintf("\x1b[14;0HCambia de estadio");
-
-				visualizarPuerta();
-				ESTADO = CERRADA;
-			}
+			case CERRADA:
+				
+				// No hay nada por ahora - Se gestiona por Interrupción
+				
+				break;
+			
+			case ABIERTA:
+				
+				// No hay nada por ahora - Se gestiona por Interrupción
+				
+				break;
 		}
 
 
