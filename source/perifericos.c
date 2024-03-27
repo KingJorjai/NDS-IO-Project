@@ -44,13 +44,14 @@ int TeclaPulsada()
 
 void ConfigurarTeclado(int Conf_Tec)
 {
+	TECLAS_CNT = TECLAS_CNT | Conf_Tec;
 	// Configuración del teclado. Modificar su registro de control en base a los bits
-        // activados en el parametro Conf_Tec
-	
+        // activados en el parametro Conf_Tec	
 }
 
 void ConfigurarTemporizador(int Latch, int Conf_Tempo)
 {
+	
 	// Configuración del temporizador. El latch es el valor del registro de datos del temporizador
         // Activar los bits del registro de control necesarios en base a los bits activados en el parámetro Conf_Tempo
 
@@ -63,7 +64,8 @@ void HabilitarIntTeclado()
 	// y después volver a habilitar las interrupciones de forma general 
 	IME=0;
         // ESCRIBID AQUÍ VUESTRO CÓDIGO
-	
+		TECLAS_CNT |= 0x21FF;
+		//Las teclas activadas son: 010 0001 1111 1111 = 21FF (del 1 al 9 y 14)
 	IME=1;
 }
 
@@ -76,7 +78,7 @@ void InhibirIntTeclado()
 
 	IME=0;
 	// ESCRIBID AQUÍ VUESTRO CÓDIGO
-
+	TECLAS_CNT &= 0x5E00;
 	IME=1;
 }  
 
@@ -109,11 +111,11 @@ void InhibirIntTempo()
 void PonerEnMarchaTempo()
 {
 	// ESCRIBID AQUÍ VUESTRO CÓDIGO
-	
+	TIMER0_CNT |= 0x0040;
 }
 
 void PararTempo()
 {
 	// ESCRIBID AQUÍ VUESTRO CÓDIGO
-	
+	TIMER0_CNT &= 0x7FBF;
 }
