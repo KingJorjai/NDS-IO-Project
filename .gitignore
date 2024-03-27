@@ -56,3 +56,6 @@ build/
 *.elf
 *.nds
 *.arm9
+
+# Kate/KWrite Backup
+*~
