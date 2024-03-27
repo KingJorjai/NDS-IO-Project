@@ -12,7 +12,7 @@ rutinasAtencion.c
 int ESTADO; // Para controlar el estado del autómata en que esté
 int seg3;   // Para ver si pasan tres segundos
 
-void RutAtencionTeclado ()
+void RutAtencionTeclado()
 {
 if (ESTADO == CERRADA)
 {	
@@ -61,7 +61,14 @@ if (ESTADO!=ESPERA)
 
 void EstablecerVectorInt()
 {
-// A COMPLETAR
+	/*
+	void irqSet(u32 mask, IntFn handler);
+	Introduce información en el Vector de Interrupciones.
+	Su orden de ejecución establece las prioridades.
+	*/
+	
+	irqSet(IRQ_TIMER0, RutAtencionTempo); // Temporizador
+	irqSet(IRQ_KEYS, RutAtencionTeclado); // Teclado
 	
 }
 

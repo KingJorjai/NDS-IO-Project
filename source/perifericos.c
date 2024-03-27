@@ -54,6 +54,14 @@ void ConfigurarTemporizador(int Latch, int Conf_Tempo)
 	
 	// Configuración del temporizador. El latch es el valor del registro de datos del temporizador
         // Activar los bits del registro de control necesarios en base a los bits activados en el parámetro Conf_Tempo
+	
+	/*
+	El parámetro Latch es el valor que debe asignarse al registro TIMER0_DAT.
+	Los bits con valor 1 en el parámetro Conf_Tempo son los que deben tomar	el valor 1 en el registro TIMER0_CNT
+	*/
+	
+	TIMER0_DAT = Latch;
+	TIMER0_CNT |= Conf_Tempo;
 
 }
 
@@ -91,6 +99,10 @@ void HabilitarIntTempo()
 	// y después volver a habilitar las interrupciones de forma general 
 	IME=0;
 	// ESCRIBID AQUÍ VUESTRO CÓDIGO
+	/*
+	IE <- IE or 0000000000001000
+	*/
+	IE |= 0x0008;
 	
 	IME=1;
 }
@@ -102,7 +114,12 @@ void InhibirIntTempo()
 	// Para realizar esa operación, primero deshabilitar todas las interrupciones de forma general, realizar la operación, 
 	// y después volver a habilitar las interrupciones de forma general 
 	IME=0;
-	// ESCRIBID AQUÍ VUESTRO CÓDIGO
+	
+	/*
+	IE <- IE AND 1111111111110111
+	*/
+	IE &= 0xFFF7;
+	
 	
 	IME=1;
 
