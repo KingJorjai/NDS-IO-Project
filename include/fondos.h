@@ -6,3 +6,5 @@ fondos.h
 
 extern void visualizarFondoUno();
 extern void visualizarFondoDos();
+extern void visualizarPuerta();
+extern void visualizarPuertaAbierta();
