@@ -37,14 +37,14 @@ void juego()
 			// Activar temporizador			---> Bit 7
 			// Generar interrupción al desbordar	---> Bit 6
 			// División de frecuencia: 1024		---> Bits 1,0
-			int conf_Tempo	= 0x00C3;	// 0000000011000011
+			int conf_Tempo	= 0x00C3;	// 0000 0000 1100 0011
 			int latch 	= 58982; 	// 5 interrupciones por segundo
 			ConfigurarTemporizador(latch, conf_Tempo);
 			HabilitarIntTempo();
 		// Teclado
 			// Activar interrupciones por parte de la tecla A ---> Bit 0
 			// Activar interrupciones por parte del teclado   ---> Bit 14
-			int conf_Tec	= 0x4001;	// 0100000000000001
+			int conf_Tec	= 0x4001;	// 0100 0000 0000 0001
 			ConfigurarTeclado(conf_Tec);
 			HabilitarIntTeclado();
 

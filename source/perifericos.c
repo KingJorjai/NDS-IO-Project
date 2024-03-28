@@ -71,7 +71,7 @@ void HabilitarIntTeclado()
 	IME=0;
         
 	// Poner a 1 el bit 12 de IE
-        TECLAS_CNT |= 0x1000; // 0001000000000000
+        IE |= 0x00001000; // 0000 0000 0000 0000 0001 0000 0000 0000
         
 	IME=1;
 }
@@ -85,7 +85,7 @@ void InhibirIntTeclado()
 	IME=0;
 	
 	// Poner a 0 el bit 12 de IE
-	TECLAS_CNT &= 0xEFFF; // 1110111111111111
+	IE &= 0xFFFFEFFF; // 1111 1111 1111 1111 1110 1111 1111 1111
 	
 	IME=1;
 }  
@@ -98,7 +98,7 @@ void HabilitarIntTempo()
 	IME=0;
 	
 	// Poner a 1 el bit 3 de IE
-	IE |= 0x0008; // 0000000000001000
+	IE |= 0x00000008; // 0000 0000 0000 0000 0000 0000 0000 1000
 	
 	IME=1;
 }
@@ -112,7 +112,7 @@ void InhibirIntTempo()
 	IME=0;
 	
 	// Poner a 0 el bit 3 de IE
-	IE &= 0xFFF7; // 1111111111110111
+	IE &= 0xFFFFFFF7; // 1111 1111 1111 1111 1111 1111 1111 0111
 	
 	IME=1;
 }
@@ -120,11 +120,11 @@ void InhibirIntTempo()
 void PonerEnMarchaTempo()
 {
 	// Poner a 1 el bit 7 de TIMER0_CNT
-	TIMER0_CNT |= 0x0040; // 0000000001000000
+	TIMER0_CNT |= 0x0040; // 0000 0000 0100 0000
 }
 
 void PararTempo()
 {
 	// Poner a 0 el bit 7 de TIMER0_CNT
-	TIMER0_CNT &= 0xFFBF; // 1111111110111111
+	TIMER0_CNT &= 0xFFBF; // 1111 1111 1011 1111
 }
