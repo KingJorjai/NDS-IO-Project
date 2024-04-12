@@ -18,15 +18,16 @@ int seg3;   // Para ver si pasan tres segundos
 //	Las interrupciones de Timer0 en principio funcionan bien
 void RutAtencionTeclado()
 {
-	if (ESTADO == CERRADA)
+	if (ESTADO == MENU_SELECTOR)
 	{	
 		if (TeclaPulsada()==A)
 		{
-			ESTADO=ABIERTA;
-			visualizarPuertaAbierta();
-			seg3=0;
-			MostrarRombo(1, 5, 5);
-			MostrarRomboGrande(2, 100, 100);
+			VisualizarJuego();	// Fondo
+			CargarNivel();		// Sprites
+			DibujarPelota();	// Sprite
+			Dibujar jugador();	// Sprite
+			vidas = 3;		// Vidas
+			DibujarBloques();	// Sprites
 		}
 	}
 }
