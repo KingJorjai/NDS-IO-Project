@@ -29,11 +29,27 @@ void visualizarMenuInicio() {
 
 //Visualiza la pantalla que sale mientras vas seleccionando el nivel, la imagen se llama Nivel
 void visualizarNivel() {
-		
+    //Dependiendo de el valor de NivelActual mostrara el nivel 1, 2 o 3
+	if (NivelAcutal==1){	
 	dmaCopyHalfWords(DMA_CHANNEL,
-        NivelBitmap, /* Variable que se genera automáticamente */
+        Nivel1Bitmap, /* Variable que se genera automáticamente */
         (uint16 *)BG_BMP_RAM(0), /* Dirección del fondo principal */
-        NivelBitmapLen); /* Longitud en bytes, variable que se genera automáticamente */
+        Nivel1BitmapLen); /* Longitud en bytes, variable que se genera automáticamente */
+    }
+
+    if (NivelAcutal==2){	
+	dmaCopyHalfWords(DMA_CHANNEL,
+        Nivel2Bitmap, /* Variable que se genera automáticamente */
+        (uint16 *)BG_BMP_RAM(0), /* Dirección del fondo principal */
+        Nivel2BitmapLen); /* Longitud en bytes, variable que se genera automáticamente */
+    }
+
+    if (NivelAcutal==3){	
+	dmaCopyHalfWords(DMA_CHANNEL,
+        Nivel3Bitmap, /* Variable que se genera automáticamente */
+        (uint16 *)BG_BMP_RAM(0), /* Dirección del fondo principal */
+        Nivel3BitmapLen); /* Longitud en bytes, variable que se genera automáticamente */
+    }
 }
 
 //Visualiza la pantalla que sale de fondo mientras juegas, la imagen se llama Juego
