@@ -52,6 +52,16 @@ void juego()
 			ConfigurarTeclado(conf_Tec);
 			HabilitarIntTeclado();
 
+
+			//Entrada menu inicio
+			VisualizarMenuInicio();
+			ConfigurarTeclado();
+			ConfigurarTemporizador();
+			//Espera a juego
+			int tic;
+			int seg10;
+			int tiempo;
+
 	// Bucle principal del juego
 	while(1)
 	{	
@@ -63,8 +73,6 @@ void juego()
 			// Visualizar(tecla)
 			tecla = TeclaPulsada();
 			iprintf("\x1b[12;0HLa tecla pulsada es: %d", tecla);
-			
-			
 		}
 		
 		// Autómata

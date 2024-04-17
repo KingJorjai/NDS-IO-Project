@@ -14,8 +14,18 @@ int seg3;   // Para ver si pasan tres segundos
 
 void RutAtencionTeclado()
 {
-	if (ESTADO == MENU_SELECTOR)
+	switch (ESTADO)
 	{	
+		case: MENU_INICIO
+		if (TeclaPulsada()==START)
+		{
+			VisualizarNivel();
+			NivelActual=1
+			VisualizarJuego();	// Fondo
+		}
+		break:
+
+		case MENU_SELECTOR:
 		if (TeclaPulsada()==A)
 		{
 			VisualizarJuego();	// Fondo
@@ -24,8 +34,93 @@ void RutAtencionTeclado()
 			Dibujar jugador();	// Sprite
 			vidas = 3;		// Vidas
 			DibujarBloques();	// Sprites
+			ESTADO=ESPERA;
 		}
+		break:
+
+		case ESPERA:
+		if (TeclaPulsada()==START)
+		{
+			InicializarPelota();
+			VisualizarFondo();
+			PonerEnMarchaTempo()
+			tic = 0;
+			seg10 = 0;
+			tiempo= 0;
+			ESTADO=JUEGO;
+		}
+		break:
+
+		case JUEGO:
+		if (TeclaPulsada()==START)
+		{
+			PararTempo();
+			VisualizarPausa();
+			PararPelota();
+			BorrarPelota();
+			BorrarBloques();
+			BorrarJugador();
+			ESTADO=PAUSA;
+		}
+		else if(TactilTocada())
+		{
+			Jugador.x = DatosPantalla.px
+		}
+		else if(PelotaTocaLadrillo() && NLadrillos>1)
+		{
+			CalcularRebote();
+			EstablecerDireccionPelota();
+			EliminarLadrillo();
+		}		
+		else if(PelotaTocaSuelo() && vidas > 1)
+		{
+			InicializarPelota();
+			vidas -= 1;
+		}
+		else if(PelotaTocaPared())
+		{
+			CalcularRebote();	// El cambio de pantalla
+			EstablecerDireccionPelota(); //se incluye en esta función
+		}
+		else if(PelotaTocaSuelo() && vidas = 1)
+		{
+		BorrarPelota();
+		BorrarBloques();
+		VisualizarPerder();
+		ESTADO=PERDER;
+		}
+		else if(PelotaTocaLadrillo() && NLadrillos==1)
+		{
+		BorrarPelota();
+		EliminarLadrillos();
+		VisualizarGanar();
+		ESTADO=GANAR;
+		}
+		}
+		break:
+
+		case PAUSA:
+		else if (TeclaPulsada()==START)
+		{
+			PonerEnMarchaTempo();
+			VisualizarJuego();
+			ReaunudarPelota();
+			DibujarPelota();
+			DibujarBloques();
+			MostrarJugador();
+			ESTADO=JUEGO;
+		}
+		break:
+		// no se si se puede hacer case perder ||ganar:
+		case PERDER: case GANAR:
+		if (TeclaPulsada()==A)
+		{
+		NivelActual = 1;
+		VisualizarNivel(NivelActual);
+		}
+		break:
 	}
+	
 }
 
 void RutAtencionTempo()
