@@ -12,10 +12,6 @@ rutinasAtencion.c
 int ESTADO; // Para controlar el estado del autómata en que esté
 int seg3;   // Para ver si pasan tres segundos
 
-// TODO:
-// - Arreglar las interrupciones del teclado
-//	Puede ser literalmente cualquier cosa
-//	Las interrupciones de Timer0 en principio funcionan bien
 void RutAtencionTeclado()
 {
 	if (ESTADO == MENU_SELECTOR)

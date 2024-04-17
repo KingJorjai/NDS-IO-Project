@@ -89,13 +89,13 @@ void juego()
 				// Ktec: <UP>
 				if (tecla == UP)
 				{
-					SumarNivel();
+					SumarNivel(&NivelActual);
 					VisualizarNivel(NivelActual);
 				}
 				
 				// Ktec:<DOWN>
 				{
-					RestarNivel();
+					RestarNivel(&NivelActual);
 					VisualizarNivel(NivelActual)
 				}
 				
