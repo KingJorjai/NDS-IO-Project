@@ -44,9 +44,13 @@ touchPosition PANT_DAT;
 #define L			9
 
 // Nombres asignados a los estados
-#define ESPERA 0
-#define CERRADA 1
-#define ABIERTA 2
+#define MENU_INICIO 0
+#define MENU_SELECTOR 1
+#define ESPERA 2
+#define JUEGO 3
+#define PAUSA 4
+#define PERDER 5
+#define GANAR 6
 
 extern int ESTADO;
 
