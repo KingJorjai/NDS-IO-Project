@@ -10,6 +10,12 @@ perifericos.c
 int tecla; // Variable para guardar la tecla pulsada; valorar si es necesaria
 
 
+int TactilTocada() {
+touchPosition pos_pantalla;
+ touchRead(&pos_pantalla);
+ return !(pos_pantalla.px==0 && pos_pantalla.py==0);
+} 
+
 
 int TeclaDetectada() 
 {

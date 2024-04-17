@@ -22,7 +22,7 @@ void RutAtencionTeclado()
 	{	
 		if (TeclaPulsada()==A)
 		{
-			ESTADO=ABIERTA;
+			ESTADO = ABIERTA;
 			visualizarPuertaAbierta();
 			seg3=0;
 			MostrarRombo(1, 5, 5);

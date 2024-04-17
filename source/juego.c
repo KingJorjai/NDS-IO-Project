@@ -24,7 +24,7 @@ void juego()
 {	
 	// Definiciones de variables
 	int tecla = 0;
-
+	touchPosition pos_pantalla;
 	// Estado inicial
 	ESTADO=ESPERA;
 	
