@@ -9,8 +9,13 @@ perifericos.c
 
 int tecla; // Variable para guardar la tecla pulsada; valorar si es necesaria
 
+/*	touchRead(&pos_pantalla); // Leemos la posición actual.
+	iprintf("\x1b[1;0HPosicion x = %d,%d \n",pos_pantalla.rawx, pos_pantalla.px);
+	iprintf("Posicion y = %d,%d ",pos_pantalla.rawy, pos_pantalla.py);
 
-int TactilTocada() {
+ swiWaitForVBlank();*/
+int TactilTocada() 
+{
 touchPosition pos_pantalla;
  touchRead(&pos_pantalla);
  return !(pos_pantalla.px==0 && pos_pantalla.py==0);
