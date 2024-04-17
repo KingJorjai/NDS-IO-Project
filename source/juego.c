@@ -17,8 +17,9 @@ y en otro ejemplo de Jaeden Ameronen
 #include "fondos.h"
 
 // Variables globales
-	int tiempo;	// ¿Esta de dónde sale?
-	int seg;	// Rutina Ktimer0 - Escribir cuántos segundos han pasado
+	int tiempo;		// ¿Esta de dónde sale?
+	int seg;		// Rutina Ktimer0 - Escribir cuántos segundos han pasado
+	int NivelActual;	// Nivel seleccionado en el menú de selección
 
 void juego()
 {	
@@ -26,7 +27,9 @@ void juego()
 	int tecla = 0;
 
 	// Estado inicial
-	ESTADO=ESPERA;
+	ESTADO=MENU_INICIO;
+	visualizarMenuInicio();
+	NivelActual = 1;
 	
 	// Configuración interrupciones
 		
@@ -38,53 +41,83 @@ void juego()
 			// Generar interrupción al desbordar	---> Bit 6
 			// División de frecuencia: 1024		---> Bits 1,0
 			int conf_Tempo	= 0x00C3;	// 0000 0000 1100 0011
-			int latch 	= 58982; 	// 5 interrupciones por segundo
+			int latch 	= 65208; 	// 100 interrupciones por segundo
 			ConfigurarTemporizador(latch, conf_Tempo);
 			HabilitarIntTempo();
 		// Teclado
-			// Activar interrupciones por parte de la tecla A ---> Bit 0
-			// Activar interrupciones por parte del teclado   ---> Bit 14
-			int conf_Tec	= 0x4001;	// 0100 0000 0000 0001
+			// Activar interrupciones por parte de la tecla A	---> Bit 0
+			// Activar interrupciones por parte de la tecla START	---> Bit 3
+			// Activar interrupciones por parte del teclado		---> Bit 14
+			int conf_Tec	= 0x4009;	// 0100 0000 0000 1001
 			ConfigurarTeclado(conf_Tec);
 			HabilitarIntTeclado();
 
 	// Bucle principal del juego
 	while(1)
 	{	
+		// Encuesta del teclado
+		if (TeclaDetectada())
+		{
+			// Ktec: <tecla>
+			
+			// Visualizar(tecla)
+			tecla = TeclaPulsada();
+			iprintf("\x1b[12;0HLa tecla pulsada es: %d", tecla);
+			
+			
+		}
+		
 		// Autómata
 		switch (ESTADO)
 		{
+			case MENU_INICIO:
+				
+				// Interrupción <START>
+				
+				break;
+			
+			case MENU_SELECTOR:
+				
+				// Interrupción <A>
+				//	# VisualizarJuego();	// Fondo
+				//	# CargarNivel();	// Sprites
+				//	# DibujarPelota();	// Sprite
+				//	# Dibujar jugador();	// Sprite
+				//	# vidas = 3;		// Vidas
+				//	# DibujarBloques();
+				
+				// Ktec: <UP>
+				if (tecla == UP)
+				{
+					SumarNivel(&NivelActual);
+					VisualizarNivel(NivelActual);
+				}
+				
+				// Ktec:<DOWN>
+				{
+					RestarNivel(&NivelActual);
+					VisualizarNivel(NivelActual)
+				}
+				
+				break;
+			
 			case ESPERA:
 				
-				// Encuesta del teclado
-				if (TeclaDetectada())
-				{
-					// Ktec: <tecla>
-					
-						// Visualizar(tecla)
-						tecla = TeclaPulsada();
-						iprintf("\x1b[12;0HLa tecla pulsada es: %d", tecla);
-					
-					// Ktec: <START>
-					if (tecla == START)
-					{
-						visualizarPuerta();
-						PonerEnMarchaTempo();
-						seg=0;
-						ESTADO = CERRADA;
-					}
-				}
-				break;
-			
-			case CERRADA:
-				
-				// No hay nada por ahora - Se gestiona por Interrupción
 				
 				break;
 			
-			case ABIERTA:
+			case PAUSA:
 				
-				// No hay nada por ahora - Se gestiona por Interrupción
+				
+				break;
+			
+			case GANAR:
+				
+				
+				break;
+			
+			case PERDER:
+				
 				
 				break;
 		}
