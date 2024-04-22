@@ -86,8 +86,8 @@ int PelotaTocaPared()
 struct Bloque bloque;
 int PelotaTocaLadrillo()
 {	
-	int colision, arriba, abajo, izquierda, derecha;
-	for (int i=0; i<numBloques; i++)
+	int colision, arriba, abajo, izquierda, derecha, i;
+	for (i=0; i<numBloques; i++)
 	{
 		bloque = bloques[i];
 		
