@@ -12,7 +12,7 @@
 struct Pelota
 {
 	double vx;	// Velocidad horizontal
-	double vy	// Velocidad vertical
+	double vy;	// Velocidad vertical
 	
 	double x;		// Posición en x
 	double y;		// Posición en y
@@ -34,7 +34,7 @@ struct Barra
 // DECLARACIONES //
 //---------------//
 
-struct Pelota pelota;
+struct Pelota pelota = {0, 0, 0, 0};
 
 struct Bloque bloques[50];
 int numBloques;
