@@ -10,8 +10,9 @@
 #include "rutinasAtencion.h"
 #include "fondos.h"
 
+int NivelActual;
 
-void RestarNivel(NivelActual) 
+void RestarNivel() 
 {
     if (NivelActual == 1)
     {
@@ -23,7 +24,7 @@ void RestarNivel(NivelActual)
     }
 }
 
-void SumarNIvel(NivelActual) 
+void SumarNIvel() 
 {
     if (NivelActual == 3)
     {

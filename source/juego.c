@@ -100,14 +100,14 @@ void juego()
 				if (tecla == ARRIBA)
 				{
 					SumarNivel();
-					VisualizarNivel();
+					visualizarNivel();
 				}
 				
 				// Ktec:<ABAJO>
 				if (tecla == ABAJO)
 				{
 					RestarNivel();
-					VisualizarNivel();
+					visualizarNivel();
 				}
 				
 				break;
