@@ -5,6 +5,8 @@
 
 #include "definiciones.h"
 
+int BARRA_X_INICIAL;
+int BARRA_Y_INICIAL;
 //-----------//
 // ELEMENTOS //
 //-----------//
@@ -81,12 +83,13 @@ int PelotaTocaPared()
 * 
 * TODO: No tengo ni idea de si esto funciona o no. Hay que comprobarlo.
 */
+struct Bloque bloque;
 int PelotaTocaLadrillo()
 {	
 	int colision, arriba, abajo, izquierda, derecha;
 	for (int i=0; i<numBloques; i++)
 	{
-		struct Bloque bloque = bloques[i];
+		bloque = bloques[i];
 		
 		colision = bloque.y<=pelota.y && pelota.y+16<=bloque.y+32 &&
 				bloque.x<=pelota.x && pelota.x+16<=bloque.x+32;	
@@ -142,34 +145,6 @@ void InicializarPelota()
 	// Arbitrario por ahora
 	pelota.x = 0.5;
 	pelota.y = 0.5;
-}
-
-/*
-* Establece la velocidad de la pelota en ambos ejes a
-* cero y devuelve la velocidad que esta llevaba antes
-* de ser parada.
-*/
-double[2] PararPelota()
-{
-	double[2] velocidad;
-	
-	velocidad[0] = Pelota.vx;
-	velocidad[1] = Pelota.vy;
-	
-	Pelota.vx = 0;
-	Pelota.vy = 0;
-	
-	return velocidad;
-}
-
-/*
-* Establece la velocidad de la pelota en función
-* del vector {vx,vy} dado como parámetro. 
-*/
-void ReanudarPelota(double[2] velocidad)
-{
-	Pelota.vx = velocidad[0];
-	Pelota.vy = velocidad[1];
 }
 
 /*
