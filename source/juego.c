@@ -15,6 +15,7 @@ y en otro ejemplo de Jaeden Ameronen
 #include "perifericos.h"
 #include "rutinasAtencion.h"
 #include "fondos.h"
+#include "menu.h"
 
 // Variables globales
 	int tiempo;		// ¿Esta de dónde sale?
@@ -99,14 +100,14 @@ void juego()
 				if (tecla == ARRIBA)
 				{
 					SumarNivel();
-					VisualizarNivel(NivelActual);
+					VisualizarNivel();
 				}
 				
 				// Ktec:<ABAJO>
 				if (tecla == ABAJO)
 				{
 					RestarNivel();
-					VisualizarNivel(NivelActual)
+					VisualizarNivel();
 				}
 				
 				break;
