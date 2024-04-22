@@ -9,8 +9,10 @@
 #include "fondos.h"
 #include "graficos.h"
 #include "MenuInicio.h"
-#include "Nivel.h"
-#include "Juego.h"
+#include "Nivel1.h"
+#include "Nivel2.h"
+#include "Nivel3.h"
+#include "JuegoFondo.h"
 #include "Fondo.h"
 #include "Pausa.h"
 #include "Ganar.h"
@@ -52,11 +54,11 @@ void visualizarNivel() {
     }
 }
 
-void visualizarJuego() {
+void visualizarJuegoFondo() {
 	dmaCopyHalfWords(DMA_CHANNEL,
-        JuegoBitmap, /* Variable que se genera automáticamente */
+        JuegoFondoBitmap, /* Variable que se genera automáticamente */
         (uint16 *)BG_BMP_RAM(0), /* Dirección del fondo principal */
-        JuegoBitmapLen); /* Longitud en bytes, variable que se genera automáticamente */
+        JuegoFondoBitmapLen); /* Longitud en bytes, variable que se genera automáticamente */
 }
 
 void visualizarFondo() {

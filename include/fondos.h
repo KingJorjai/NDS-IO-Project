@@ -6,7 +6,7 @@ fondos.h
 
 extern void visualizarMenuInicio();
 extern void visualizarNivel();
-extern void visualizarJuego();
+extern void visualizarJuegoFondo();
 extern void visualizarFondo();
 extern void visualizarPausa();
 extern void visualizarGanar();
