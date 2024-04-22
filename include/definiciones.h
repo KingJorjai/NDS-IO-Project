@@ -30,6 +30,9 @@ definiciones.h
 // Acceso a los registros de la pantalla táctil
 touchPosition PANT_DAT;
 
+#define ANCHO_PANTALLA 256
+#definE ALTO_PANTALLA 192
+
 // Nombres asignados a las teclas para facilitar la comprensión de nuestro código
 
 #define A			0 
