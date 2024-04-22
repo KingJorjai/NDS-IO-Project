@@ -30,7 +30,10 @@ void juego()
 	ESTADO=MENU_INICIO;
 	visualizarMenuInicio();
 	NivelActual = 1;
-	
+
+	//vidas
+	int vidas;
+
 	// Configuración interrupciones
 		
 		// Interrupt Patcher
