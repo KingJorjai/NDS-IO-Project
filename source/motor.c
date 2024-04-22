@@ -16,19 +16,19 @@ struct Pelota
 	
 	double x;		// Posición en x
 	double y;		// Posición en y
-}
+};
 struct Bloque
 {
 	int destruido;	// DESTRUIDO , NO_DESTRUIDO
 	
 	double x;		// Posición en x
 	double y;		// Posición en y
-}
+};
 struct Barra
 {
 	double x;		// Posición en x
 	double y;		// Posición en y
-}
+};
 
 //---------------//
 // DECLARACIONES //
@@ -83,17 +83,17 @@ int PelotaTocaPared()
 */
 int PelotaTocaLadrillo()
 {	
+	int colision, arriba, abajo, izquierda, derecha;
 	for (int i=0; i<numBloques; i++)
 	{
-		struct Bloque bloque = bloques[i]
+		struct Bloque bloque = bloques[i];
 		
-		int colision =	bloque.y<=pelota.y && pelota.y+16<=bloque.y+32 &&
-				bloque.x<=pelota.x && pelota.x+16<=bloque.x+32;
-				
-		int arriba =	bloque.y+32 <= pelota.y+16;
-		int abajo =	bloque.y >= pelota.y;
-		int izquierda =	bloque.x+32 <= pelota.x+16;
-		int derecha =	bloque.x >= pelota.x;
+		colision = bloque.y<=pelota.y && pelota.y+16<=bloque.y+32 &&
+				bloque.x<=pelota.x && pelota.x+16<=bloque.x+32;	
+		arriba = bloque.y+32 <= pelota.y+16;
+		abajo =	bloque.y >= pelota.y;
+		izquierda =	bloque.x+32 <= pelota.x+16;
+		derecha = bloque.x >= pelota.x;
 		
 		if (colision) // if (colisión=true)
 		{
@@ -187,8 +187,8 @@ void ActualizarPelota()
 // CONTROL BARRA //
 //---------------//
 
-void InicializarBarra();
+void InicializarBarra()
 {
-	barra.x = BARRA_X_INICIAL
-	barra.y = BARRA_Y_INICIAL
+	barra.x = BARRA_X_INICIAL;
+	barra.y = BARRA_Y_INICIAL;
 }
