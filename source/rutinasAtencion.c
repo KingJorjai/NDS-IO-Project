@@ -16,14 +16,14 @@ void RutAtencionTeclado()
 {
 	switch (ESTADO)
 	{	
-		case: MENU_INICIO
+		case MENU_INICIO:
 		if (TeclaPulsada()==START)
 		{
 			VisualizarNivel();
 			NivelActual=1
 			VisualizarJuego();	// Fondo
 		}
-		break:
+		break;
 
 		case MENU_SELECTOR:
 		if (TeclaPulsada()==A)
@@ -36,7 +36,7 @@ void RutAtencionTeclado()
 			DibujarBloques();	// Sprites
 			ESTADO=ESPERA;
 		}
-		break:
+		break;
 
 		case ESPERA:
 		if (TeclaPulsada()==START)
@@ -49,7 +49,7 @@ void RutAtencionTeclado()
 			tiempo= 0;
 			ESTADO=JUEGO;
 		}
-		break:
+		break;
 
 		case JUEGO:
 		if (TeclaPulsada()==START)
@@ -126,34 +126,7 @@ void RutAtencionTeclado()
 void RutAtencionTempo()
 {
 	static int tick=0;
-	static int seg=0;
-	
-
-if (ESTADO!=ESPERA)
-{
-	tick++; 
-	if (tick==5)
-	{
-		seg++;
-		iprintf("\x1b[13;0HSegundos que han pasado=%d", seg); // Visualizar(Seg)
-		tick=0;
-		
-		if (ESTADO == ABIERTA)
-		{
-			seg3++;
-			if (seg3==3)
-			{
-				visualizarPuerta();
-				seg3=0;
-				ESTADO=CERRADA;
-				BorrarRombo(1, 5, 5);
-				BorrarRomboGrande(2, 100, 100);
-			}
-		}
-				
-	}
-}
-	
+	static int seg=0;	
 }
 
 void EstablecerVectorInt()
