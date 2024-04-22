@@ -57,9 +57,7 @@ void juego()
 
 
 			//Entrada menu inicio
-			VisualizarMenuInicio();
-			ConfigurarTeclado();
-			ConfigurarTemporizador();
+			visualizarMenuInicio();
 			//Espera a juego
 			int tic;
 			int seg10;
@@ -97,16 +95,17 @@ void juego()
 				//	# vidas = 3;		// Vidas
 				//	# DibujarBloques();
 				
-				// Ktec: <UP>
-				if (tecla == UP)
+				// Ktec: <ARRIBA>
+				if (tecla == ARRIBA)
 				{
-					SumarNivel(&NivelActual);
+					SumarNivel();
 					VisualizarNivel(NivelActual);
 				}
 				
-				// Ktec:<DOWN>
+				// Ktec:<ABAJO>
+				if (tecla == ABAJO)
 				{
-					RestarNivel(&NivelActual);
+					RestarNivel();
 					VisualizarNivel(NivelActual)
 				}
 				
@@ -137,6 +136,3 @@ void juego()
 	}
 	// Valorar si hay que inhibir las interrupciones
 }
-
-
-
