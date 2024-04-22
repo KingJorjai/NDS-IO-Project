@@ -28,6 +28,7 @@ void visualizarMenuInicio() {
         MenuInicioBitmapLen); /* Longitud en bytes, variable que se genera automáticamente */
 }
 
+int NivelActual;
 void visualizarNivel() {
 	if (NivelActual == 1) {
 	dmaCopyHalfWords(DMA_CHANNEL,
