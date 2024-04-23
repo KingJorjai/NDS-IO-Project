@@ -7,9 +7,6 @@ extern u16* gfxSub;
 
 extern void memoriaReserva();
 
-/* Para cada uno de los 256 valores que puede tomar un Píxel le da un color en la pantalla principal. El valor 0 es transparente y los valores sin definir, negros */
-extern void EstablecerPaletaPrincipal();
-
 /* Para cada uno de los 256 valores que puede tomar un Píxel le da un color en la pantalla secundaria. El valor 0 es transparente y los valores sin definir negros */
 extern void EstablecerPaletaPelota();
 extern void EstablecerPaletaBloque();

@@ -31,7 +31,7 @@ definiciones.h
 touchPosition PANT_DAT;
 
 #define ANCHO_PANTALLA 256
-#definE ALTO_PANTALLA 192
+#define ALTO_PANTALLA 192
 
 // Nombres asignados a las teclas para facilitar la comprensión de nuestro código
 
@@ -55,5 +55,9 @@ touchPosition PANT_DAT;
 #define PERDER 5
 #define GANAR 6
 
+// Variables globales
 extern int ESTADO;
-
+extern int NivelActual;
+extern int tiempo;
+extern int seg10;
+extern int NivelActual;

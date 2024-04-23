@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "stdio.h": "c",
-        "juego.h": "c"
+        "juego.h": "c",
+        "definiciones.h": "c"
     }
 }
