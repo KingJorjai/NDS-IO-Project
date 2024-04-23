@@ -4,6 +4,7 @@
 perifericos.h
 -------------------------------------*/
 
+extern int TactilTocada();
 extern int TeclaDetectada();
 extern int TeclaPulsada();
 extern void ConfigurarTeclado(int Conf_Tec);

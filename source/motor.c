@@ -2,46 +2,23 @@
 #include <stdio.h>		// Librería de entrada/salida estándar de C
 #include <stdlib.h>		// Librería estándar de C para reserva de memoria y conversiones numéricas
 #include <unistd.h>		// Librería para asegurar la compatibilidad entre sistemas operativos
+#include <math.h>		// Librería de funciones matemáticas
 
 #include "definiciones.h"
+#include "motor.h"
+#include "sprites.h"
 
-int BARRA_X_INICIAL;
-int BARRA_Y_INICIAL;
 //-----------//
 // ELEMENTOS //
 //-----------//
 
-struct Pelota
-{
-	double vx;	// Velocidad horizontal
-	double vy;	// Velocidad vertical
-	
-	double x;		// Posición en x
-	double y;		// Posición en y
-};
-struct Bloque
-{
-	int destruido;	// DESTRUIDO , NO_DESTRUIDO
-	
-	double x;		// Posición en x
-	double y;		// Posición en y
-};
-struct Barra
-{
-	double x;		// Posición en x
-	double y;		// Posición en y
-};
+
 
 //---------------//
 // DECLARACIONES //
 //---------------//
 
-struct Pelota pelota = {0, 0, 0, 0};
-
-struct Bloque bloques[50];
-int numBloques;
-
-struct Barra barra;
+int NLadrillos;
 
 //------------//
 // COLISIONES //
@@ -87,7 +64,7 @@ struct Bloque bloque;
 int PelotaTocaLadrillo()
 {	
 	int colision, arriba, abajo, izquierda, derecha, i;
-	for (i=0; i<numBloques; i++)
+	for (i=0; i<NLadrillos; i++)
 	{
 		bloque = bloques[i];
 		
@@ -162,8 +139,66 @@ void ActualizarPelota()
 // CONTROL BARRA //
 //---------------//
 
+/*
+* Da un valor inicial a las coordenadas de la barra.
+*/
 void InicializarBarra()
 {
 	barra.x = BARRA_X_INICIAL;
 	barra.y = BARRA_Y_INICIAL;
+}
+
+//-----------------//
+// DIBUJAR SPRITES //
+//-----------------//
+
+void CargarNivel()
+{
+	int i,x,y;
+	switch(NivelActual)
+	{
+		default:
+			NLadrillos = 4;
+			x = 10; y = 10;
+			for (i=0; i<NLadrillos; i++)
+			{
+				bloques[i] = {NO_DESTRUIDO,x,y}
+				x+=70
+			}
+			
+	
+	}
+}
+
+void DibujarPelota()
+{
+	int int_x,int_y;
+	int_x = (int) round(pelota.x);
+	int_y = (int) round(pelota.y);
+	
+	MostrarPelota(2,int_x,int_y);
+}
+
+void DibujarBarra()
+{
+	int int_x,int_y;
+	int_x = (int) round(barra.x);
+	int_y = (int) round(barra.y);
+	
+	MostrarBarra(2,int_x,int_y);
+}
+
+void OcultarPelota()
+{
+	
+}
+
+void OcultarBarra()
+{
+
+}
+
+void OcultarBloques()
+{
+
 }

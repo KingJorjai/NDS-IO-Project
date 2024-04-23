@@ -8,117 +8,87 @@ rutinasAtencion.c
 #include "perifericos.h"
 #include "fondos.h"
 #include "sprites.h"
+#include "mortor.h"
 
-int ESTADO; // Para controlar el estado del autómata en que esté
-int seg3;   // Para ver si pasan tres segundos
+int ESTADO;	// Para controlar el estado del autómata en que esté
+int seg10;	// Para ver si pasan diez segundos
+int tiempo;	// Lleva la cuenta de los segundos que pasan
+int tic;	// Se suma uno en cada interrupción de KTimer0
 
 void RutAtencionTeclado()
 {
 	switch (ESTADO)
 	{	
 		case MENU_INICIO:
-		if (TeclaPulsada()==START)
-		{
-			VisualizarNivel();
-			NivelActual=1
-			VisualizarJuego();	// Fondo
-		}
-		break;
+			if (TeclaPulsada()==START)
+			{
+				
+				NivelActual=1
+				visualizarNivel();	// Fondo
+			}
+			break;
 
 		case MENU_SELECTOR:
-		if (TeclaPulsada()==A)
-		{
-			VisualizarJuego();	// Fondo
-			CargarNivel();		// Sprites
-			DibujarPelota();	// Sprite
-			Dibujar jugador();	// Sprite
-			vidas = 3;		// Vidas
-			DibujarBloques();	// Sprites
-			ESTADO=ESPERA;
-		}
-		break;
+			if (TeclaPulsada()==A)
+			{
+				visualizarJuego();	// Fondo
+				CargarNivel();		// Sprites
+				DibujarPelota();	// Sprite
+				DibujarBarra();	// Sprite
+				vidas = 3;		// Vidas
+				DibujarBloques();	// Sprites
+				ESTADO=ESPERA;
+			}
+			
+			break;
 
 		case ESPERA:
-		if (TeclaPulsada()==START)
-		{
-			InicializarPelota();
-			VisualizarFondo();
-			PonerEnMarchaTempo()
-			tic = 0;
-			seg10 = 0;
-			tiempo= 0;
-			ESTADO=JUEGO;
-		}
-		break;
+			if (TeclaPulsada()==START)
+			{
+				InicializarPelota();
+				visualizarJuegoFondo();
+				PonerEnMarchaTempo()
+				tic = 0;
+				seg10 = 0;
+				tiempo= 0;
+				ESTADO=JUEGO;
+			}
+			break;
 
 		case JUEGO:
-		if (TeclaPulsada()==START)
-		{
-			PararTempo();
-			VisualizarPausa();
-			PararPelota();
-			BorrarPelota();
-			BorrarBloques();
-			BorrarJugador();
-			ESTADO=PAUSA;
-		}
-		else if(TactilTocada())
-		{
-			Jugador.x = DatosPantalla.px
-		}
-		else if(PelotaTocaLadrillo() && NLadrillos>1)
-		{
-			CalcularRebote();
-			EstablecerDireccionPelota();
-			EliminarLadrillo();
-		}		
-		else if(PelotaTocaSuelo() && vidas > 1)
-		{
-			InicializarPelota();
-			vidas -= 1;
-		}
-		else if(PelotaTocaPared())
-		{
-			CalcularRebote();	// El cambio de pantalla
-			EstablecerDireccionPelota(); //se incluye en esta función
-		}
-		else if(PelotaTocaSuelo() && vidas = 1)
-		{
-		BorrarPelota();
-		BorrarBloques();
-		VisualizarPerder();
-		ESTADO=PERDER;
-		}
-		else if(PelotaTocaLadrillo() && NLadrillos==1)
-		{
-		BorrarPelota();
-		EliminarLadrillos();
-		VisualizarGanar();
-		ESTADO=GANAR;
-		}
-		}
-		break:
+			if (TeclaPulsada()==START)
+			{
+				PararTempo();
+				visualizarPausa();
+				OcultarPelota();
+				OcultarBloques();
+				OcultarBarra();
+				ESTADO=PAUSA;
+			}
+			
+			break;
 
 		case PAUSA:
-		else if (TeclaPulsada()==START)
-		{
-			PonerEnMarchaTempo();
-			VisualizarJuego();
-			ReaunudarPelota();
-			DibujarPelota();
-			DibujarBloques();
-			MostrarJugador();
-			ESTADO=JUEGO;
-		}
-		break:
-		// no se si se puede hacer case perder ||ganar:
+			if (TeclaPulsada()==START)
+			{
+				PonerEnMarchaTempo();
+				visualizarJuegoFondo();
+				ReaunudarPelota();
+				DibujarPelota();
+				DibujarBloques();
+				DibujarBarra();
+				ESTADO=JUEGO;
+			}
+			
+			break;
+		
 		case PERDER: case GANAR:
-		if (TeclaPulsada()==A)
-		{
-		NivelActual = 1;
-		VisualizarNivel(NivelActual);
-		}
-		break:
+			if (TeclaPulsada()==A)
+			{
+				NivelActual = 1;
+				visualizarNivel();
+			}
+			break;
 	}
 	
 }

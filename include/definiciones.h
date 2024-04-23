@@ -55,5 +55,9 @@ touchPosition PANT_DAT;
 #define PERDER 5
 #define GANAR 6
 
+// Variables globales
 extern int ESTADO;
+extern int NivelActual;
+extern int tiempo;
+extern int seg10;
 extern int NivelActual;

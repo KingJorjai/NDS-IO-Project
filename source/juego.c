@@ -16,11 +16,18 @@ y en otro ejemplo de Jaeden Ameronen
 #include "rutinasAtencion.h"
 #include "fondos.h"
 #include "menu.h"
+#include "motor.h"
 
 // Variables globales
 	int tiempo;		// ¿Esta de dónde sale?
-	int seg;		// Rutina Ktimer0 - Escribir cuántos segundos han pasado
+	int seg10;		// Para contar cada 10 segundos
 	int NivelActual;	// Nivel seleccionado en el menú de selección
+	touchPosition DatosPantalla;
+	
+// Elementos del juego
+	Barra barra;
+	Pelota pelota;
+	int NLadrillos;
 
 void juego()
 {	
@@ -82,38 +89,55 @@ void juego()
 		{
 			case MENU_INICIO:
 				
-				// Interrupción <START>
-				
 				break;
 			
 			case MENU_SELECTOR:
-				
-				// Interrupción <A>
-				//	# VisualizarJuego();	// Fondo
-				//	# CargarNivel();	// Sprites
-				//	# DibujarPelota();	// Sprite
-				//	# Dibujar jugador();	// Sprite
-				//	# vidas = 3;		// Vidas
-				//	# DibujarBloques();
-				
-				// Ktec: <ARRIBA>
-				if (tecla == ARRIBA)
-				{
-					SumarNivel();
-					visualizarNivel();
-				}
-				
-				// Ktec:<ABAJO>
-				if (tecla == ABAJO)
-				{
-					RestarNivel();
-					visualizarNivel();
-				}
 				
 				break;
 			
 			case ESPERA:
 				
+				break;
+			
+			case JUEGO:
+				
+				if(TactilTocada())
+				{
+					barra.x = DatosPantalla.px;
+				}
+				
+				if(PelotaTocaLadrillo()!=0 && NLadrillos>1)
+				{
+					CalcularRebote(PelotaTocaLadrillo());
+				}		
+				
+				if(PelotaTocaSuelo()!=0 && vidas > 1)
+				{
+					InicializarPelota();
+					vidas -= 1;
+				}
+				
+				if(PelotaTocaPared()!=0)
+				{
+					CalcularRebote(PelotaTocaPared());	// El cambio de pantalla
+				}
+				
+				if(PelotaTocaSuelo()!=0 && vidas==1)
+				{
+					OcultarPelota();
+					OcultarBloques();
+					visualizarPerder();
+					ESTADO=PERDER;
+				}
+				
+				if(PelotaTocaLadrillo()!=0 && NLadrillos==1)
+				{
+					OcultarPelota();
+					visualizarGanar();
+					ESTADO=GANAR;
+				}
+				
+				ActualizarPelota();
 				
 				break;
 			

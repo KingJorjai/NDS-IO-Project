@@ -8,7 +8,6 @@
 #include "definiciones.h"
 #include "perifericos.h"
 #include "rutinasAtencion.h"
-#include "fondos.h"
 
 int NivelActual;
 
