@@ -8,30 +8,34 @@ rutinasAtencion.c
 #include "perifericos.h"
 #include "fondos.h"
 #include "sprites.h"
-#include "mortor.h"
+#include "motor.h"
 
 int ESTADO;	// Para controlar el estado del autómata en que esté
 int seg10;	// Para ver si pasan diez segundos
 int tiempo;	// Lleva la cuenta de los segundos que pasan
 int tic;	// Se suma uno en cada interrupción de KTimer0
+int vidas;	// Vidas restantes
 
 void RutAtencionTeclado()
 {
+	int tecla = TeclaPulsada();
 	switch (ESTADO)
 	{	
 		case MENU_INICIO:
-			if (TeclaPulsada()==START)
+			if (tecla==START)
 			{
-				
-				NivelActual=1
+				NivelActual=1;
 				visualizarNivel();	// Fondo
+				ESTADO=MENU_SELECTOR;
 			}
 			break;
 
 		case MENU_SELECTOR:
-			if (TeclaPulsada()==A)
+		
+			// Selección de nivel
+			if (tecla==A)
 			{
-				visualizarJuego();	// Fondo
+				visualizarJuegoFondo();	// Fondo
 				CargarNivel();		// Sprites
 				DibujarPelota();	// Sprite
 				DibujarBarra();	// Sprite
@@ -39,15 +43,26 @@ void RutAtencionTeclado()
 				DibujarBloques();	// Sprites
 				ESTADO=ESPERA;
 			}
-			
+			else
+			// Cambio de nivel
+			if (tecla == ABAJO)
+				{
+					SumarNivel();
+					visualizarNivel();
+				}
+			else if (tecla == ARRIBA)
+				{
+					RestarNivel();
+					visualizarNivel();
+				}
 			break;
 
 		case ESPERA:
-			if (TeclaPulsada()==START)
+			if (tecla==START)
 			{
 				InicializarPelota();
 				visualizarJuegoFondo();
-				PonerEnMarchaTempo()
+				PonerEnMarchaTempo();
 				tic = 0;
 				seg10 = 0;
 				tiempo= 0;
@@ -56,7 +71,7 @@ void RutAtencionTeclado()
 			break;
 
 		case JUEGO:
-			if (TeclaPulsada()==START)
+			if (tecla==START)
 			{
 				PararTempo();
 				visualizarPausa();
@@ -65,32 +80,29 @@ void RutAtencionTeclado()
 				OcultarBarra();
 				ESTADO=PAUSA;
 			}
-			
 			break;
 
 		case PAUSA:
-			if (TeclaPulsada()==START)
+			if (tecla==START)
 			{
 				PonerEnMarchaTempo();
 				visualizarJuegoFondo();
-				ReaunudarPelota();
 				DibujarPelota();
 				DibujarBloques();
 				DibujarBarra();
 				ESTADO=JUEGO;
 			}
-			
 			break;
 		
 		case PERDER: case GANAR:
-			if (TeclaPulsada()==A)
+			if (tecla==A)
 			{
 				NivelActual = 1;
 				visualizarNivel();
+				ESTADO=MENU_SELECTOR;
 			}
 			break;
 	}
-	
 }
 
 void RutAtencionTempo()

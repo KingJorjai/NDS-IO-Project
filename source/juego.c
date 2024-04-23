@@ -32,7 +32,7 @@ y en otro ejemplo de Jaeden Ameronen
 void juego()
 {	
 	// Definiciones de variables
-	int tecla = 0;
+	int tecla = -1;
 	touchPosition pos_pantalla;
 	// Estado inicial
 	ESTADO=MENU_INICIO;
@@ -56,10 +56,12 @@ void juego()
 			ConfigurarTemporizador(latch, conf_Tempo);
 			HabilitarIntTempo();
 		// Teclado
-			// Activar interrupciones por parte de la tecla A	---> Bit 0
+			// Activar interrupciones por parte de la tecla A		---> Bit 0
 			// Activar interrupciones por parte de la tecla START	---> Bit 3
-			// Activar interrupciones por parte del teclado		---> Bit 14
-			int conf_Tec	= 0x4009;	// 0100 0000 0000 1001
+			// Activar interrupciones por parte de la tecla ARRIBA	---> Bit 6
+			// Activar interrupciones por parte de la tecla ABAJO	---> Bit 7
+			// Activar interrupciones por parte del teclado			---> Bit 14
+			int conf_Tec	= 0x40C9;	// 0100 0000 1100 1001
 			ConfigurarTeclado(conf_Tec);
 			HabilitarIntTeclado();
 
@@ -77,18 +79,12 @@ void juego()
 		// Encuesta del teclado
 		if (TeclaDetectada())
 		{
-			// Ktec: <tecla>
-			
-			// Visualizar(tecla)
 			tecla = TeclaPulsada();
 			iprintf("\x1b[12;0HLa tecla pulsada es: %d", tecla);
 		}
-		
-		// Autómata
+
 		switch (ESTADO)
 		{
-			case MENU_INICIO:
-				
 				break;
 			
 			case MENU_SELECTOR:
@@ -157,6 +153,7 @@ void juego()
 				break;
 		}
 
+		tecla = -1; // Reiniciar la tecla pulsada
 
 	}
 	// Valorar si hay que inhibir las interrupciones

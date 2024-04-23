@@ -23,7 +23,7 @@ void RestarNivel()
     }
 }
 
-void SumarNIvel() 
+void SumarNivel() 
 {
     if (NivelActual == 3)
     {

@@ -19,6 +19,7 @@
 //---------------//
 
 int NLadrillos;
+Bloque bloques[50];
 
 //------------//
 // COLISIONES //
@@ -60,9 +61,9 @@ int PelotaTocaPared()
 * 
 * TODO: No tengo ni idea de si esto funciona o no. Hay que comprobarlo.
 */
-struct Bloque bloque;
 int PelotaTocaLadrillo()
 {	
+	Bloque bloque;
 	int colision, arriba, abajo, izquierda, derecha, i;
 	for (i=0; i<NLadrillos; i++)
 	{
@@ -162,8 +163,11 @@ void CargarNivel()
 			x = 10; y = 10;
 			for (i=0; i<NLadrillos; i++)
 			{
-				bloques[i] = {NO_DESTRUIDO,x,y}
-				x+=70
+				bloques[i].destruido = NO_DESTRUIDO;
+				bloques[i].x = x;
+				bloques[i].y = y;
+				
+				x+=70;
 			}
 			
 	
@@ -176,6 +180,7 @@ void DibujarPelota()
 	int_x = (int) round(pelota.x);
 	int_y = (int) round(pelota.y);
 	
+	EstablecerPaletaPelota();
 	MostrarPelota(2,int_x,int_y);
 }
 
@@ -185,7 +190,26 @@ void DibujarBarra()
 	int_x = (int) round(barra.x);
 	int_y = (int) round(barra.y);
 	
+	EstablecerPaletaBarra();
 	MostrarBarra(2,int_x,int_y);
+}
+
+void DibujarBloques()
+{
+	int i,int_x,int_y;
+	for (i=0; i<NLadrillos; i++)
+	{
+		if (bloques[i].destruido == NO_DESTRUIDO)
+		{
+			Bloque bloque = bloques[i];
+			int_x = (int) round(bloque.x);
+			int_y = (int) round(bloque.y);
+
+			EstablecerPaletaBloque();
+			MostrarBloque(2,int_x,int_y);
+		}
+	}
+
 }
 
 void OcultarPelota()

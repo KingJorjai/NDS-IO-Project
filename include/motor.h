@@ -55,10 +55,11 @@ extern void ActualizarPelota();
 void InicializarBarra();
 
 // Dibujar Sprites
-extern void Cargarnivel();
+extern void CargarNivel();
 
 extern void DibujarPelota();
 extern void DibujarBarra();
+extern void DibujarBloques();
 
 extern void OcultarPelota();
 extern void OcultarBarra();
