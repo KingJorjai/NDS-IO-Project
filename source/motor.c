@@ -195,11 +195,12 @@ void DibujarBarra()
 void DibujarBloques()
 {
 	int i,int_x,int_y;
+	Bloque bloque;
 	for (i=0; i<NLadrillos; i++)
 	{
 		if (bloques[i].destruido == NO_DESTRUIDO)
 		{
-			Bloque bloque = bloques[i];
+			bloque = bloques[i];
 			int_x = (int) round(bloque.x);
 			int_y = (int) round(bloque.y);
 
