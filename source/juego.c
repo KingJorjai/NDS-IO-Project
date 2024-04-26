@@ -75,12 +75,13 @@ void juego()
 
 	// Bucle principal del juego
 	while(1)
-	{	
+	{
 		// Encuesta del teclado
 		if (TeclaDetectada())
 		{
 			tecla = TeclaPulsada();
 			iprintf("\x1b[12;0HLa tecla pulsada es: %d", tecla);
+
 		}
 
 		switch (ESTADO)
