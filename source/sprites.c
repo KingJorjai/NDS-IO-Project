@@ -31,7 +31,7 @@ void memoriaReserva(){
 
 //-------------------------------------------ESTABLECER PALETAS DE COLORES-----------------------------------------------
 //Establecemos la paleta de colores
-void EstablecerPaletaPrincipaña(){
+void EstablecerPaletaPrincipal(){
 	SPRITE_PALETTE[0] = RGB15(31,31,31);
 	SPRITE_PALETTE[1] = RGB15(31,0,0);
 	SPRITE_PALETTE[2] = RGB15(0,31,0);

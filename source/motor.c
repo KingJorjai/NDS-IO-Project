@@ -174,13 +174,14 @@ void CargarNivel()
 	}
 }
 
+EstablecerPaletaPrincipal();
+
 void DibujarPelota()
 {
 	int int_x,int_y;
 	int_x = (int) round(pelota.x);
 	int_y = (int) round(pelota.y);
 	
-	EstablecerPaletaPelota();
 	MostrarPelota(2,int_x,int_y);
 }
 
@@ -190,7 +191,6 @@ void DibujarBarra()
 	int_x = (int) round(barra.x);
 	int_y = (int) round(barra.y);
 	
-	EstablecerPaletaBarra();
 	MostrarBarra(2,int_x,int_y);
 }
 
@@ -205,7 +205,6 @@ void DibujarBloques()
 			int_x = (int) round(bloque.x);
 			int_y = (int) round(bloque.y);
 
-			EstablecerPaletaBloque();
 			MostrarBloque(2,int_x,int_y);
 		}
 	}
