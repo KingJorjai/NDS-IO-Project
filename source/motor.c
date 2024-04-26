@@ -174,8 +174,6 @@ void CargarNivel()
 	}
 }
 
-EstablecerPaletaPrincipal();
-
 void DibujarPelota()
 {
 	int int_x,int_y;
