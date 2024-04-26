@@ -6,6 +6,7 @@ perifericos.c
 #include <stdio.h>
 #include "definiciones.h"
 
+touchPosition pos_pantalla;
 
 int tecla; // Variable para guardar la tecla pulsada; valorar si es necesaria
 
@@ -16,10 +17,22 @@ int tecla; // Variable para guardar la tecla pulsada; valorar si es necesaria
  swiWaitForVBlank();*/
 int TactilTocada() 
 {
-touchPosition pos_pantalla;
  touchRead(&pos_pantalla);
  return !(pos_pantalla.px==0 && pos_pantalla.py==0);
 } 
+//Al dibujar en pantalla los valores de la posicion x los valores en pantalla se machacan y ademas puede que entre en tactil tocada pero que la posicion.px sea 0
+/*
+		if (TactilTocada()) //pantalla todavia tocada
+		{//no tocada por lo que el valor.px es 0
+			consoleClear();
+			iprintf("\x1b[14;0HLa coordenada X de la tactil es: %d", TactilGetX());
+		}
+*/
+int TactilGetX()
+{
+ touchRead(&pos_pantalla);
+ return pos_pantalla.px;
+}
 
 
 int TeclaDetectada() 

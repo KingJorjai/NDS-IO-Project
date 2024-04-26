@@ -15,4 +15,5 @@ extern void HabilitarIntTempo();
 extern void InhibirIntTempo();
 extern void PonerEnMarchaTempo();
 extern void PararTempo();
+extern int TactilGetX();
 
