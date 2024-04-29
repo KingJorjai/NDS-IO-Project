@@ -121,8 +121,10 @@ void CalcularRebote(int direccion)
 void InicializarPelota()
 {
 	// Arbitrario por ahora
-	pelota.x = 0.5;
-	pelota.y = 0.5;
+	pelota.vx = 0.064;
+	pelota.vy = 0.064;
+	pelota.x = PELOTA_X_INICIAL;
+	pelota.y = PELOTA_Y_INICIAL;
 }
 
 /*
