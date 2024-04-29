@@ -149,6 +149,16 @@ void InicializarBarra()
 	barra.y = BARRA_Y_INICIAL;
 }
 
+void ActualizarBarra()
+{
+	int x = TactilGetX();
+	if(x != barra.x)
+	{
+		barra.x = x;
+		DibujarBarra();
+	}
+}
+
 //-----------------//
 // DIBUJAR SPRITES //
 //-----------------//

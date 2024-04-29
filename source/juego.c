@@ -100,7 +100,7 @@ void juego()
 				
 				if(TactilTocada())
 				{
-					barra.x = DatosPantalla.px;
+					ActualizarBarra();
 				}
 				
 				if(PelotaTocaLadrillo()!=0 && NLadrillos>1)
