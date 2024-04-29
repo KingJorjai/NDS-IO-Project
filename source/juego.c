@@ -15,22 +15,33 @@ y en otro ejemplo de Jaeden Ameronen
 #include "perifericos.h"
 #include "rutinasAtencion.h"
 #include "fondos.h"
+#include "menu.h"
+#include "motor.h"
 
 // Variables globales
 	int tiempo;		// ¿Esta de dónde sale?
-	int seg;		// Rutina Ktimer0 - Escribir cuántos segundos han pasado
+	int seg10;		// Para contar cada 10 segundos
 	int NivelActual;	// Nivel seleccionado en el menú de selección
+	touchPosition DatosPantalla;
+	
+// Elementos del juego
+	Barra barra;
+	Pelota pelota;
+	int NLadrillos;
 
 void juego()
 {	
 	// Definiciones de variables
-	int tecla = 0;
+	int tecla = -1;
 	touchPosition pos_pantalla;
 	// Estado inicial
 	ESTADO=MENU_INICIO;
 	visualizarMenuInicio();
 	NivelActual = 1;
-	
+
+	//vidas
+	int vidas;
+
 	// Configuración interrupciones
 		
 		// Interrupt Patcher
@@ -45,18 +56,18 @@ void juego()
 			ConfigurarTemporizador(latch, conf_Tempo);
 			HabilitarIntTempo();
 		// Teclado
-			// Activar interrupciones por parte de la tecla A	---> Bit 0
+			// Activar interrupciones por parte de la tecla A		---> Bit 0
 			// Activar interrupciones por parte de la tecla START	---> Bit 3
-			// Activar interrupciones por parte del teclado		---> Bit 14
-			int conf_Tec	= 0x4009;	// 0100 0000 0000 1001
+			// Activar interrupciones por parte de la tecla ARRIBA	---> Bit 6
+			// Activar interrupciones por parte de la tecla ABAJO	---> Bit 7
+			// Activar interrupciones por parte del teclado			---> Bit 14
+			int conf_Tec	= 0x40C9;	// 0100 0000 1100 1001
 			ConfigurarTeclado(conf_Tec);
 			HabilitarIntTeclado();
 
 
 			//Entrada menu inicio
-			VisualizarMenuInicio();
-			ConfigurarTeclado();
-			ConfigurarTemporizador();
+			visualizarMenuInicio();
 			//Espera a juego
 			int tic;
 			int seg10;
@@ -64,53 +75,66 @@ void juego()
 
 	// Bucle principal del juego
 	while(1)
-	{	
+	{
 		// Encuesta del teclado
 		if (TeclaDetectada())
 		{
-			// Ktec: <tecla>
-			
-			// Visualizar(tecla)
 			tecla = TeclaPulsada();
 			iprintf("\x1b[12;0HLa tecla pulsada es: %d", tecla);
+
 		}
-		
-		// Autómata
+
 		switch (ESTADO)
 		{
-			case MENU_INICIO:
-				
-				// Interrupción <START>
-				
 				break;
 			
 			case MENU_SELECTOR:
-				
-				// Interrupción <A>
-				//	# VisualizarJuego();	// Fondo
-				//	# CargarNivel();	// Sprites
-				//	# DibujarPelota();	// Sprite
-				//	# Dibujar jugador();	// Sprite
-				//	# vidas = 3;		// Vidas
-				//	# DibujarBloques();
-				
-				// Ktec: <UP>
-				if (tecla == UP)
-				{
-					SumarNivel(&NivelActual);
-					VisualizarNivel(NivelActual);
-				}
-				
-				// Ktec:<DOWN>
-				{
-					RestarNivel(&NivelActual);
-					VisualizarNivel(NivelActual)
-				}
 				
 				break;
 			
 			case ESPERA:
 				
+				break;
+			
+			case JUEGO:
+				
+				if(TactilTocada())
+				{
+					ActualizarBarra();
+				}
+				
+				if(PelotaTocaLadrillo()!=0 && NLadrillos>1)
+				{
+					CalcularRebote(PelotaTocaLadrillo());
+				}		
+				
+				if(PelotaTocaSuelo()!=0 && vidas > 1)
+				{
+					InicializarPelota();
+					vidas -= 1;
+				}
+				
+				if(PelotaTocaPared()!=0)
+				{
+					CalcularRebote(PelotaTocaPared());	// El cambio de pantalla
+				}
+				
+				if(PelotaTocaSuelo()!=0 && vidas==1)
+				{
+					OcultarPelota();
+					OcultarBloques();
+					visualizarPerder();
+					ESTADO=PERDER;
+				}
+				
+				if(PelotaTocaLadrillo()!=0 && NLadrillos==1)
+				{
+					OcultarPelota();
+					visualizarGanar();
+					ESTADO=GANAR;
+				}
+				
+				ActualizarPelota();
 				
 				break;
 			
@@ -130,10 +154,8 @@ void juego()
 				break;
 		}
 
+		tecla = -1; // Reiniciar la tecla pulsada
 
 	}
 	// Valorar si hay que inhibir las interrupciones
 }
-
-
-

@@ -2,44 +2,24 @@
 #include <stdio.h>		// Librería de entrada/salida estándar de C
 #include <stdlib.h>		// Librería estándar de C para reserva de memoria y conversiones numéricas
 #include <unistd.h>		// Librería para asegurar la compatibilidad entre sistemas operativos
+#include <math.h>		// Librería de funciones matemáticas
 
 #include "definiciones.h"
+#include "motor.h"
+#include "sprites.h"
 
 //-----------//
 // ELEMENTOS //
 //-----------//
 
-struct Pelota
-{
-	double vx;	// Velocidad horizontal
-	double vy	// Velocidad vertical
-	
-	double x;		// Posición en x
-	double y;		// Posición en y
-}
-struct Bloque
-{
-	int destruido;	// DESTRUIDO , NO_DESTRUIDO
-	
-	double x;		// Posición en x
-	double y;		// Posición en y
-}
-struct Barra
-{
-	double x;		// Posición en x
-	double y;		// Posición en y
-}
+
 
 //---------------//
 // DECLARACIONES //
 //---------------//
 
-struct Pelota pelota;
-
-struct Bloque bloques[50];
-int numBloques;
-
-struct Barra barra;
+int NLadrillos;
+Bloque bloques[50];
 
 //------------//
 // COLISIONES //
@@ -83,17 +63,18 @@ int PelotaTocaPared()
 */
 int PelotaTocaLadrillo()
 {	
-	for (int i=0; i<numBloques; i++)
+	Bloque bloque;
+	int colision, arriba, abajo, izquierda, derecha, i;
+	for (i=0; i<NLadrillos; i++)
 	{
-		struct Bloque bloque = bloques[i]
+		bloque = bloques[i];
 		
-		int colision =	bloque.y<=pelota.y && pelota.y+16<=bloque.y+32 &&
-				bloque.x<=pelota.x && pelota.x+16<=bloque.x+32;
-				
-		int arriba =	bloque.y+32 <= pelota.y+16;
-		int abajo =	bloque.y >= pelota.y;
-		int izquierda =	bloque.x+32 <= pelota.x+16;
-		int derecha =	bloque.x >= pelota.x;
+		colision = bloque.y<=pelota.y && pelota.y+16<=bloque.y+32 &&
+				bloque.x<=pelota.x && pelota.x+16<=bloque.x+32;	
+		arriba = bloque.y+32 <= pelota.y+16;
+		abajo =	bloque.y >= pelota.y;
+		izquierda =	bloque.x+32 <= pelota.x+16;
+		derecha = bloque.x >= pelota.x;
 		
 		if (colision) // if (colisión=true)
 		{
@@ -145,34 +126,6 @@ void InicializarPelota()
 }
 
 /*
-* Establece la velocidad de la pelota en ambos ejes a
-* cero y devuelve la velocidad que esta llevaba antes
-* de ser parada.
-*/
-double[2] PararPelota()
-{
-	double[2] velocidad;
-	
-	velocidad[0] = Pelota.vx;
-	velocidad[1] = Pelota.vy;
-	
-	Pelota.vx = 0;
-	Pelota.vy = 0;
-	
-	return velocidad;
-}
-
-/*
-* Establece la velocidad de la pelota en función
-* del vector {vx,vy} dado como parámetro. 
-*/
-void ReanudarPelota(double[2] velocidad)
-{
-	Pelota.vx = velocidad[0];
-	Pelota.vy = velocidad[1];
-}
-
-/*
 * Actualiza la posición de la pelota en función
 * de su velocidad actual. 
 */
@@ -187,8 +140,114 @@ void ActualizarPelota()
 // CONTROL BARRA //
 //---------------//
 
-void InicializarBarra();
+/*
+* Da un valor inicial a las coordenadas de la barra.
+*/
+void InicializarBarra()
 {
-	barra.x = BARRA_X_INICIAL
-	barra.y = BARRA_Y_INICIAL
+	barra.x = BARRA_X_INICIAL;
+}
+
+void ActualizarBarra()
+{
+	int x = TactilGetX();
+	if(x != barra.x && x > 16 && x < ANCHO_PANTALLA-16)
+	{
+		barra.x = x;
+		DibujarBarra();
+	}
+}
+
+//-----------------//
+// DIBUJAR SPRITES //
+//-----------------//
+
+void CargarNivel()
+{
+	int i,x,y;
+	switch(NivelActual)
+	{
+		default:
+			NLadrillos = 4;
+			x = 10; y = 10;
+			for (i=0; i<NLadrillos; i++)
+			{
+				bloques[i].destruido = NO_DESTRUIDO;
+				bloques[i].x = x;
+				bloques[i].y = y;
+				
+				x+=70;
+			}
+			
+	
+	}
+}
+
+void DibujarPelota()
+{
+	int int_x,int_y;
+	int_x = (int) round(pelota.x);
+	int_y = (int) round(pelota.y);
+	
+	MostrarPelota(2,int_x,int_y);
+}
+
+void DibujarBarra()
+{
+	int int_x;
+	int_x = (int) round(barra.x)-16;
+	
+	MostrarBarra(2,int_x,BARRA_Y_INICIAL);
+}
+
+void DibujarBloques()
+{
+	int i,int_x,int_y;
+	Bloque bloque;
+	for (i=0; i<NLadrillos; i++)
+	{
+		if (bloques[i].destruido == NO_DESTRUIDO)
+		{
+			bloque = bloques[i];
+			int_x = (int) round(bloque.x);
+			int_y = (int) round(bloque.y);
+
+			MostrarBloque(2,int_x,int_y);
+		}
+	}
+
+}
+
+void OcultarPelota()
+{
+	int int_x,int_y;
+	int_x = (int) round(pelota.x);
+	int_y = (int) round(pelota.y);
+	
+	BorrarPelota(2,int_x,int_y);
+}
+
+void OcultarBarra()
+{
+	int int_x;
+	int_x = (int) round(barra.x)-16;
+	
+	BorrarBarra(2,int_x,BARRA_Y_INICIAL);
+}
+
+void OcultarBloques()
+{
+	int i,int_x,int_y;
+	Bloque bloque;
+	for (i=0; i<NLadrillos; i++)
+	{
+		if (bloques[i].destruido == NO_DESTRUIDO)
+		{
+			bloque = bloques[i];
+			int_x = (int) round(bloque.x);
+			int_y = (int) round(bloque.y);
+
+			BorrarBloque(2,int_x,int_y);
+		}
+	}
 }
