@@ -146,13 +146,12 @@ void ActualizarPelota()
 void InicializarBarra()
 {
 	barra.x = BARRA_X_INICIAL;
-	barra.y = BARRA_Y_INICIAL;
 }
 
 void ActualizarBarra()
 {
 	int x = TactilGetX();
-	if(x != barra.x)
+	if(x != barra.x && x > 16 && x < ANCHO_PANTALLA-16)
 	{
 		barra.x = x;
 		DibujarBarra();
@@ -195,11 +194,10 @@ void DibujarPelota()
 
 void DibujarBarra()
 {
-	int int_x,int_y;
-	int_x = (int) round(barra.x);
-	int_y = (int) round(barra.y);
+	int int_x;
+	int_x = (int) round(barra.x)-16;
 	
-	MostrarBarra(2,int_x,int_y);
+	MostrarBarra(2,int_x,0);
 }
 
 void DibujarBloques()
