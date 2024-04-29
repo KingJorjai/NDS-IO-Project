@@ -146,7 +146,16 @@ void ActualizarPelota()
 void InicializarBarra()
 {
 	barra.x = BARRA_X_INICIAL;
-	barra.y = BARRA_Y_INICIAL;
+}
+
+void ActualizarBarra()
+{
+	int x = TactilGetX();
+	if(x != barra.x && x > 16 && x < ANCHO_PANTALLA-16)
+	{
+		barra.x = x;
+		DibujarBarra();
+	}
 }
 
 //-----------------//
@@ -185,11 +194,10 @@ void DibujarPelota()
 
 void DibujarBarra()
 {
-	int int_x,int_y;
-	int_x = (int) round(barra.x);
-	int_y = (int) round(barra.y);
+	int int_x;
+	int_x = (int) round(barra.x)-16;
 	
-	MostrarBarra(2,int_x,int_y);
+	MostrarBarra(2,int_x,BARRA_Y_INICIAL);
 }
 
 void DibujarBloques()
@@ -212,15 +220,34 @@ void DibujarBloques()
 
 void OcultarPelota()
 {
+	int int_x,int_y;
+	int_x = (int) round(pelota.x);
+	int_y = (int) round(pelota.y);
 	
+	BorrarPelota(2,int_x,int_y);
 }
 
 void OcultarBarra()
 {
-
+	int int_x;
+	int_x = (int) round(barra.x)-16;
+	
+	BorrarBarra(2,int_x,BARRA_Y_INICIAL);
 }
 
 void OcultarBloques()
 {
+	int i,int_x,int_y;
+	Bloque bloque;
+	for (i=0; i<NLadrillos; i++)
+	{
+		if (bloques[i].destruido == NO_DESTRUIDO)
+		{
+			bloque = bloques[i];
+			int_x = (int) round(bloque.x);
+			int_y = (int) round(bloque.y);
 
+			BorrarBloque(2,int_x,int_y);
+		}
+	}
 }

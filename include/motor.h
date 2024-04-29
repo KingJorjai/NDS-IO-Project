@@ -25,7 +25,6 @@ typedef struct
 typedef struct
 {
 	double x;		// Posición en x
-	double y;		// Posición en y
 } Barra;
 
 extern Barra barra;
@@ -50,8 +49,8 @@ extern void ActualizarPelota();
 #define NO_DESTRUIDO 0
 
 // Barra
-#define BARRA_X_INICIAL 96	// Pendiente de revisar
-#define BARRA_Y_INICIAL	160	// Pendiente de revisar
+#define BARRA_X_INICIAL 96
+#define BARRA_Y_INICIAL	146
 void InicializarBarra();
 
 // Dibujar Sprites
