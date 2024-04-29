@@ -164,6 +164,9 @@ void ActualizarBarra()
 
 void CargarNivel()
 {
+	InicializarBarra();
+	InicializarPelota();
+
 	int i,x,y;
 	switch(NivelActual)
 	{
