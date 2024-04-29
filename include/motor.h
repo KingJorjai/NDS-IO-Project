@@ -49,8 +49,8 @@ extern void ActualizarPelota();
 #define NO_DESTRUIDO 0
 
 // Barra
-#define BARRA_X_INICIAL 96	// Pendiente de revisar
-#define BARRA_Y_INICIAL	32	// Pendiente de revisar
+#define BARRA_X_INICIAL 96
+#define BARRA_Y_INICIAL	146
 void InicializarBarra();
 
 // Dibujar Sprites

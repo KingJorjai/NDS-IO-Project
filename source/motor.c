@@ -197,7 +197,7 @@ void DibujarBarra()
 	int int_x;
 	int_x = (int) round(barra.x)-16;
 	
-	MostrarBarra(2,int_x,0);
+	MostrarBarra(2,int_x,BARRA_Y_INICIAL);
 }
 
 void DibujarBloques()
@@ -232,7 +232,7 @@ void OcultarBarra()
 	int int_x;
 	int_x = (int) round(barra.x)-16;
 	
-	BorrarBarra(2,int_x,0);
+	BorrarBarra(2,int_x,BARRA_Y_INICIAL);
 }
 
 void OcultarBloques()
