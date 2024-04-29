@@ -220,15 +220,34 @@ void DibujarBloques()
 
 void OcultarPelota()
 {
+	int int_x,int_y;
+	int_x = (int) round(pelota.x);
+	int_y = (int) round(pelota.y);
 	
+	BorrarPelota(2,int_x,int_y);
 }
 
 void OcultarBarra()
 {
-
+	int int_x;
+	int_x = (int) round(barra.x)-16;
+	
+	BorrarBarra(2,int_x,0);
 }
 
 void OcultarBloques()
 {
+	int i,int_x,int_y;
+	Bloque bloque;
+	for (i=0; i<NLadrillos; i++)
+	{
+		if (bloques[i].destruido == NO_DESTRUIDO)
+		{
+			bloque = bloques[i];
+			int_x = (int) round(bloque.x);
+			int_y = (int) round(bloque.y);
 
+			BorrarBloque(2,int_x,int_y);
+		}
+	}
 }
