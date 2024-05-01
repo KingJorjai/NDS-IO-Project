@@ -41,6 +41,8 @@ extern void CalcularRebote(int direccion);
 
 // Pelota
 #define VPELOTA_BASE 1		// Pendiente de revisar
+#define PELOTA_X_INICIAL 128
+#define PELOTA_Y_INICIAL 81
 extern void InicializarPelota();
 extern void ActualizarPelota();
 

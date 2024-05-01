@@ -101,6 +101,7 @@ void juego()
 				if(TactilTocada())
 				{
 					ActualizarBarra();
+					DibujarBarra();
 				}
 				
 				if(PelotaTocaLadrillo()!=0 && NLadrillos>1)
@@ -122,6 +123,7 @@ void juego()
 				if(PelotaTocaSuelo()!=0 && vidas==1)
 				{
 					OcultarPelota();
+					OcultarBarra();
 					OcultarBloques();
 					visualizarPerder();
 					ESTADO=PERDER;
@@ -130,12 +132,11 @@ void juego()
 				if(PelotaTocaLadrillo()!=0 && NLadrillos==1)
 				{
 					OcultarPelota();
+					OcultarBarra();
 					visualizarGanar();
 					ESTADO=GANAR;
 				}
-				
-				ActualizarPelota();
-				
+
 				break;
 			
 			case PAUSA:

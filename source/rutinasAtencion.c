@@ -9,11 +9,12 @@ rutinasAtencion.c
 #include "fondos.h"
 #include "sprites.h"
 #include "motor.h"
+#include "menu.h"
 
 int ESTADO;	// Para controlar el estado del autómata en que esté
 int seg10;	// Para ver si pasan diez segundos
 int tiempo;	// Lleva la cuenta de los segundos que pasan
-int tic;	// Se suma uno en cada interrupción de KTimer0
+int tick;	// Se suma uno en cada interrupción de KTimer0
 int vidas;	// Vidas restantes
 
 void RutAtencionTeclado()
@@ -35,12 +36,14 @@ void RutAtencionTeclado()
 			// Selección de nivel
 			if (tecla==A)
 			{
-				visualizarJuegoFondo();	// Fondo
-				CargarNivel();		// Sprites
-				DibujarPelota();	// Sprite
-				DibujarBarra();	// Sprite
-				vidas = 3;		// Vidas
-				DibujarBloques();	// Sprites
+				visualizarJuegoFondo();
+				CargarNivel();
+				InicializarBarra();
+				InicializarPelota();
+				DibujarPelota();
+				DibujarBarra();
+				DibujarBloques();
+				vidas = 3;
 				ESTADO=ESPERA;
 			}
 			else
@@ -58,12 +61,10 @@ void RutAtencionTeclado()
 			break;
 
 		case ESPERA:
-			if (tecla==START)
+			if (tecla==START || tecla==A)
 			{
-				InicializarPelota();
-				visualizarJuegoFondo();
 				PonerEnMarchaTempo();
-				tic = 0;
+				tick = 0;
 				seg10 = 0;
 				tiempo= 0;
 				ESTADO=JUEGO;
@@ -107,8 +108,23 @@ void RutAtencionTeclado()
 
 void RutAtencionTempo()
 {
-	static int tick=0;
-	static int seg=0;	
+	static int seg=0;
+
+	tick++;
+	ActualizarPelota();
+	DibujarPelota();
+
+	if (tick==100)
+	{
+		tick=0;
+		seg++;
+		tiempo++;
+		if (seg==10)
+		{
+			seg=0;
+			seg10=1;
+		}
+	}	
 }
 
 void EstablecerVectorInt()
