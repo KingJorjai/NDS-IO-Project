@@ -7,6 +7,7 @@
 #include "definiciones.h"
 #include "motor.h"
 #include "sprites.h"
+#include "perifericos.h"
 
 //-----------//
 // ELEMENTOS //
@@ -78,6 +79,8 @@ int PelotaTocaLadrillo()
 		
 		if (colision) // if (colisión=true)
 		{
+			BorrarBloque(2+i,bloque.x,bloque.y);
+
 			if (abajo) return ABAJO;
 			if (arriba) return ARRIBA;
 			if (izquierda) return IZQUIERDA;
@@ -156,7 +159,6 @@ void ActualizarBarra()
 	if(x != barra.x && x > 16 && x < ANCHO_PANTALLA-16)
 	{
 		barra.x = x;
-		DibujarBarra();
 	}
 }
 
@@ -194,7 +196,7 @@ void DibujarPelota()
 	int_x = (int) round(pelota.x);
 	int_y = (int) round(pelota.y);
 	
-	MostrarPelota(2,int_x,int_y);
+	MostrarPelota(0,int_x,int_y);
 }
 
 void DibujarBarra()
@@ -202,7 +204,7 @@ void DibujarBarra()
 	int int_x;
 	int_x = (int) round(barra.x)-16;
 	
-	MostrarBarra(2,int_x,BARRA_Y_INICIAL);
+	MostrarBarra(1,int_x,BARRA_Y_INICIAL);
 }
 
 void DibujarBloques()
@@ -217,7 +219,7 @@ void DibujarBloques()
 			int_x = (int) round(bloque.x);
 			int_y = (int) round(bloque.y);
 
-			MostrarBloque(2,int_x,int_y);
+			MostrarBloque(2+i,int_x,int_y);
 		}
 	}
 
@@ -229,7 +231,7 @@ void OcultarPelota()
 	int_x = (int) round(pelota.x);
 	int_y = (int) round(pelota.y);
 	
-	BorrarPelota(2,int_x,int_y);
+	BorrarPelota(0,int_x,int_y);
 }
 
 void OcultarBarra()
@@ -237,7 +239,7 @@ void OcultarBarra()
 	int int_x;
 	int_x = (int) round(barra.x)-16;
 	
-	BorrarBarra(2,int_x,BARRA_Y_INICIAL);
+	BorrarBarra(1,int_x,BARRA_Y_INICIAL);
 }
 
 void OcultarBloques()
@@ -252,7 +254,7 @@ void OcultarBloques()
 			int_x = (int) round(bloque.x);
 			int_y = (int) round(bloque.y);
 
-			BorrarBloque(2,int_x,int_y);
+			BorrarBloque(2+i,int_x,int_y);
 		}
 	}
 }

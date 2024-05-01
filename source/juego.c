@@ -101,6 +101,7 @@ void juego()
 				if(TactilTocada())
 				{
 					ActualizarBarra();
+					DibujarBarra();
 				}
 				
 				if(PelotaTocaLadrillo()!=0 && NLadrillos>1)
@@ -135,9 +136,7 @@ void juego()
 					visualizarGanar();
 					ESTADO=GANAR;
 				}
-				
-				ActualizarPelota();
-				
+
 				break;
 			
 			case PAUSA:
