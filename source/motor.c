@@ -32,7 +32,7 @@ Bloque bloques[50];
 */
 int PelotaTocaSuelo()
 {
-	if (pelota.y >= ALTO_PANTALLA-32 /*debajo*/)
+	if (pelota.y >= ALTO_PANTALLA-PELOTA_ALTO /*debajo*/)
 		return 1;
 	else
 		return 0;
@@ -43,13 +43,13 @@ int PelotaTocaSuelo()
 */
 int PelotaTocaPared()
 {
-	if (pelota.y <=0)
+	if (pelota.y <= 0)
 		return ARRIBA;
 	
 	else if (pelota.x <= 0)
 		return IZQUIERDA;
 	
-	else if (pelota.x >= ANCHO_PANTALLA-32)
+	else if (pelota.x + PELOTA_ANCHO >= ANCHO_PANTALLA)
 		return DERECHA;
 	
 	else
@@ -65,30 +65,33 @@ int PelotaTocaPared()
 int PelotaTocaLadrillo()
 {	
 	Bloque bloque;
-	int colision, arriba, abajo, izquierda, derecha, i;
-	for (i=0; i<NLadrillos; i++)
+	//int colision = 0; // Add variable declaration and initialize to 0
+	int vertical,horizontal,i;
+	
+	for(i=0; i<NLadrillos; i++)
 	{
 		bloque = bloques[i];
-		
-		colision = bloque.y<=pelota.y && pelota.y+16<=bloque.y+32 &&
-				bloque.x<=pelota.x && pelota.x+16<=bloque.x+32;	
-		arriba = bloque.y+32 <= pelota.y+16;
-		abajo =	bloque.y >= pelota.y;
-		izquierda =	bloque.x+32 <= pelota.x+16;
-		derecha = bloque.x >= pelota.x;
-		
-		if (colision) // if (colisión=true)
-		{
-			BorrarBloque(2+i,bloque.x,bloque.y);
 
-			if (abajo) return ABAJO;
-			if (arriba) return ARRIBA;
-			if (izquierda) return IZQUIERDA;
-			if (derecha) return DERECHA;
-		}
+		vertical = (pelota.x+PELOTA_ANCHO > bloque.x && pelota.x < bloque.x+BLOQUE_ANCHO) // acotado horiz.
+				&& (pelota.y == bloque.y+BLOQUE_ALTO || pelota.y+PELOTA_ALTO == bloque.y );
+		
+		horizontal = (pelota.y+PELOTA_ALTO > bloque.y && pelota.y < bloque.y+BLOQUE_ALTO) // acotado vert.
+				&& (pelota.x == bloque.x+BLOQUE_ANCHO || pelota.x == bloque.x );
+
+		if (vertical) return ABAJO;
+		if (horizontal) return IZQUIERDA;
 	}
-	
+
 	return 0; // No hay colisión
+}
+
+int PelotaTocaBarra()
+{
+	if (round(pelota.y) == BARRA_Y_INICIAL/*&&
+		pelota.x>=barra.x &&
+		barra.x+BARRA_ANCHO>=pelota.y+PELOTA_ANCHO*/)
+	return 1;
+	else return 0;
 }
 
 /*
@@ -101,12 +104,12 @@ void CalcularRebote(int direccion)
 	{
 		case ARRIBA:
 		case ABAJO:
-			pelota.y = -pelota.y;
+			pelota.vy = -pelota.vy;
 			break;
 		
 		case IZQUIERDA:
 		case DERECHA:
-			pelota.x = -pelota.x;
+			pelota.vx = -pelota.vx;
 			break;
 		
 		default:
@@ -124,8 +127,8 @@ void CalcularRebote(int direccion)
 void InicializarPelota()
 {
 	// Arbitrario por ahora
-	pelota.vx = 0.5;
-	pelota.vy = 0.5;
+	pelota.vx = 0.25;
+	pelota.vy = 0.25;
 	pelota.x = PELOTA_X_INICIAL;
 	pelota.y = PELOTA_Y_INICIAL;
 }
