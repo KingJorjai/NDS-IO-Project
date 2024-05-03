@@ -171,10 +171,6 @@ void RutAtencionTempo()
 				visualizarGanar();
 				ESTADO=GANAR;
 			}
-			if (pelotaTocaBarra!=0)
-			{
-				CalcularRebote(ARRIBA);
-			}
 
 			break;
 	}

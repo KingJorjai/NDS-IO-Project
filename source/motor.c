@@ -96,13 +96,19 @@ int PelotaTocaLadrillo()
 
 	return 0; // No hay colisión
 }
-
+/**
+ * Devuelve 1 si la pelota toca la barra, 0 en caso contrario.
+*/
 int PelotaTocaBarra()
 {
-	if ((int)(pelota.y) == BARRA_Y_INICIAL
-		/*&& pelota.x+PELOTA_ANCHO>=barra.x
-		&& barra.x+BARRA_ANCHO>=pelota.x*/)
-	return 1;
+	if (pelota.y+PELOTA_ALTO > BARRA_Y_INICIAL
+		&& pelota.y+PELOTA_ALTO < BARRA_Y_INICIAL+BARRA_ALTO
+		&& pelota.x+PELOTA_ANCHO>=barra.x
+		&& barra.x+BARRA_ANCHO>=pelota.x)
+	{
+		pelota.vy = -fabs(pelota.vy);
+		return 1;
+	}
 	else return 0;
 }
 
@@ -232,7 +238,7 @@ void DibujarBarra()
 	int int_x;
 	int_x = (int) round(barra.x)-16;
 	
-	MostrarBarra(1,int_x,BARRA_Y_INICIAL);
+	MostrarBarra(1,int_x,BARRA_Y_INICIAL-BARRA_ALTO);
 }
 
 void DibujarBloques()
@@ -247,7 +253,7 @@ void DibujarBloques()
 			int_x = (int) round(bloque.x);
 			int_y = (int) round(bloque.y);
 
-			MostrarBloque(2+i,int_x,int_y-BLOQUE_ANCHO/2);
+			MostrarBloque(2+i,int_x,int_y-BLOQUE_ALTO);
 		}
 	}
 
@@ -282,7 +288,7 @@ void OcultarBloques()
 			int_x = (int) round(bloque.x);
 			int_y = (int) round(bloque.y);
 
-			BorrarBloque(2+i,int_x,int_y);
+			BorrarBloque(2+i,int_x,int_y-BLOQUE_ALTO);
 		}
 	}
 }
