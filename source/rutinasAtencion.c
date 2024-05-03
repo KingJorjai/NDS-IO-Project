@@ -114,8 +114,7 @@ void RutAtencionTempo()
 		{
 		case JUEGO:
 			tick++;
-			ActualizarPelota();
-			DibujarPelota();
+			
 
 			if (tick==100)
 			{
@@ -129,30 +128,30 @@ void RutAtencionTempo()
 				}
 			}
 
-			// DEBUG
-
-			iprintf("\x1b[10;0HColisión con la barra: %d", PelotaTocaBarra());
-			iprintf("\x1b[16;0HColisión con bloque: %d", PelotaTocaLadrillo());
-
 			///
+			int pelotaTocaBarra = PelotaTocaBarra();
+			int pelotaTocaLadrillo = PelotaTocaLadrillo();
+			int pelotaTocaPared = PelotaTocaPared();
+			int pelotaTocaSuelo = PelotaTocaSuelo();
 
-			if(PelotaTocaLadrillo()!=0 && NLadrillos>1)
+			if(pelotaTocaLadrillo!=0 && NLadrillos>1)
 			{
-				CalcularRebote(PelotaTocaLadrillo());
+				CalcularRebote(pelotaTocaLadrillo);
 			}		
 			
-			if(PelotaTocaSuelo()!=0 && vidas > 1)
+			if(pelotaTocaSuelo!=0 && vidas > 1)
 			{
 				InicializarPelota();
 				vidas -= 1;
 			}
 			
-			if(PelotaTocaPared()!=0)
+			if(pelotaTocaPared!=0)
 			{
-				CalcularRebote(PelotaTocaPared());	// El cambio de pantalla
+				CalcularRebote(pelotaTocaPared);
 			}
+
 			
-			if(PelotaTocaSuelo()!=0 && vidas==1)
+			if(pelotaTocaSuelo!=0 && vidas==1)
 			{
 				OcultarPelota();
 				OcultarBarra();
@@ -161,17 +160,21 @@ void RutAtencionTempo()
 				ESTADO=PERDER;
 			}
 			
-			if(PelotaTocaLadrillo()!=0 && NLadrillos==1)
+			if(pelotaTocaLadrillo!=0 && NLadrillos==1)
 			{
 				OcultarPelota();
 				OcultarBarra();
+				OcultarBloques();
 				visualizarGanar();
 				ESTADO=GANAR;
 			}
-			if (PelotaTocaBarra() != 0)
+			if (pelotaTocaBarra!=0)
 			{
 				CalcularRebote(ARRIBA);
 			}
+
+			ActualizarPelota();
+			DibujarPelota();
 
 			break;
 	}
