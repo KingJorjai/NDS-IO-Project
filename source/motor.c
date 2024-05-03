@@ -180,11 +180,14 @@ void CargarNivel()
 		default:
 			NLadrillos = 4;
 			x = 10; y = 10;
+			Bloque bloque;
 			for (i=0; i<NLadrillos; i++)
 			{
-				bloques[i].destruido = NO_DESTRUIDO;
-				bloques[i].x = x;
-				bloques[i].y = y;
+				bloque.destruido = NO_DESTRUIDO;
+				bloque.x = x;
+				bloque.y = y;
+
+				bloques[i] = bloque;
 				
 				x+=70;
 			}
@@ -216,13 +219,13 @@ void DibujarBloques()
 	Bloque bloque;
 	for (i=0; i<NLadrillos; i++)
 	{
-		if (bloques[i].destruido == NO_DESTRUIDO)
+		bloque = bloques[i];
+		if (bloque.destruido == NO_DESTRUIDO)
 		{
-			bloque = bloques[i];
 			int_x = (int) round(bloque.x);
 			int_y = (int) round(bloque.y);
 
-			MostrarBloque(2+i,int_x,int_y);
+			MostrarBloque(2+i,int_x,int_y-BLOQUE_ANCHO/2);
 		}
 	}
 
