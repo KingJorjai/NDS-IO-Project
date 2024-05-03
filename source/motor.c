@@ -79,7 +79,7 @@ int PelotaTocaLadrillo()
 				&& (pelota.y == bloque.y+BLOQUE_ALTO || pelota.y+PELOTA_ALTO == bloque.y );
 		
 			horizontal = (pelota.y+PELOTA_ALTO > bloque.y && pelota.y < bloque.y+BLOQUE_ALTO) // acotado vert.
-				&& (pelota.x == bloque.x+BLOQUE_ANCHO || pelota.x == bloque.x );
+				&& (pelota.x == bloque.x+BLOQUE_ANCHO || pelota.x+PELOTA_ANCHO == bloque.x );
 
 		if (vertical || horizontal)
 		{
