@@ -87,9 +87,9 @@ int PelotaTocaLadrillo()
 
 int PelotaTocaBarra()
 {
-	if (round(pelota.y) == BARRA_Y_INICIAL/*&&
-		pelota.x>=barra.x &&
-		barra.x+BARRA_ANCHO>=pelota.y+PELOTA_ANCHO*/)
+	if ((int)(pelota.y) == BARRA_Y_INICIAL
+		/*&& pelota.x+PELOTA_ANCHO>=barra.x
+		&& barra.x+BARRA_ANCHO>=pelota.x*/)
 	return 1;
 	else return 0;
 }
@@ -111,9 +111,6 @@ void CalcularRebote(int direccion)
 		case DERECHA:
 			pelota.vx = -pelota.vx;
 			break;
-		
-		default:
-			break;
 	}
 }
 
@@ -127,8 +124,8 @@ void CalcularRebote(int direccion)
 void InicializarPelota()
 {
 	// Arbitrario por ahora
-	pelota.vx = 0.25;
-	pelota.vy = 0.25;
+	pelota.vx = 0.5;
+	pelota.vy = 0.5;
 	pelota.x = PELOTA_X_INICIAL;
 	pelota.y = PELOTA_Y_INICIAL;
 }
@@ -159,7 +156,7 @@ void InicializarBarra()
 void ActualizarBarra()
 {
 	int x = TactilGetX();
-	if(x != barra.x && x > 16 && x < ANCHO_PANTALLA-16)
+	if(x != barra.x && x > BARRA_ANCHO/2 && x < ANCHO_PANTALLA-BARRA_ANCHO/2)
 	{
 		barra.x = x;
 	}
