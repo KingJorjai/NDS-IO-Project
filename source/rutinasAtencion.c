@@ -141,7 +141,7 @@ void RutAtencionTempo()
 				CalcularRebote(pelotaTocaLadrillo);
 			}		
 			
-			if(pelotaTocaSuelo!=0 && vidas > 1)
+			if(pelotaTocaSuelo!=0 && vidas != 0)
 			{
 				InicializarPelota();
 				vidas -= 1;
@@ -162,7 +162,7 @@ void RutAtencionTempo()
 				ESTADO=PERDER;
 			}
 			
-			if(pelotaTocaLadrillo!=0 && NLadrillosRestantes==0)
+			if(NLadrillosRestantes==0)
 			{
 				PararTempo();
 				OcultarPelota();
