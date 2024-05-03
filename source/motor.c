@@ -20,6 +20,7 @@
 //---------------//
 
 int NLadrillos;
+int NLadrillosRestantes;
 Bloque bloques[50];
 
 //------------//
@@ -72,14 +73,25 @@ int PelotaTocaLadrillo()
 	{
 		bloque = bloques[i];
 
-		vertical = (pelota.x+PELOTA_ANCHO > bloque.x && pelota.x < bloque.x+BLOQUE_ANCHO) // acotado horiz.
+		if (bloque.destruido == NO_DESTRUIDO)
+		{
+			vertical = (pelota.x+PELOTA_ANCHO > bloque.x && pelota.x < bloque.x+BLOQUE_ANCHO) // acotado horiz.
 				&& (pelota.y == bloque.y+BLOQUE_ALTO || pelota.y+PELOTA_ALTO == bloque.y );
 		
-		horizontal = (pelota.y+PELOTA_ALTO > bloque.y && pelota.y < bloque.y+BLOQUE_ALTO) // acotado vert.
+			horizontal = (pelota.y+PELOTA_ALTO > bloque.y && pelota.y < bloque.y+BLOQUE_ALTO) // acotado vert.
 				&& (pelota.x == bloque.x+BLOQUE_ANCHO || pelota.x == bloque.x );
 
-		if (vertical) return ABAJO;
-		if (horizontal) return IZQUIERDA;
+		if (vertical || horizontal)
+		{
+			bloques[i].destruido = DESTRUIDO;
+			BorrarBloque(2+i,bloque.x,bloque.y);
+			NLadrillosRestantes -= 1;
+
+			if (vertical) return ABAJO;
+			if (horizontal) return IZQUIERDA;
+		}
+		}
+		
 	}
 
 	return 0; // No hay colisión
@@ -166,31 +178,44 @@ void ActualizarBarra()
 // DIBUJAR SPRITES //
 //-----------------//
 
+/*
+* Crea el array de bloques y establece el número de ladrillos para cada nivel
+*/
 void CargarNivel()
 {
-	InicializarBarra();
-	InicializarPelota();
-
 	int i,x,y;
 	switch(NivelActual)
 	{
 		default:
-			NLadrillos = 4;
+			NLadrillos = 12;
 			x = 10; y = 10;
 			Bloque bloque;
-			for (i=0; i<NLadrillos; i++)
+			bloque.destruido = NO_DESTRUIDO;
+
+			for (i=0; i<NLadrillos/2; i++)
 			{
-				bloque.destruido = NO_DESTRUIDO;
+				
 				bloque.x = x;
 				bloque.y = y;
 
 				bloques[i] = bloque;
 				
-				x+=70;
+				x+=40;
+			}
+			x = 10; y = 40;
+			for (i=NLadrillos/2; i<NLadrillos; i++)
+			{
+				bloque.x = x;
+				bloque.y = y;
+
+				bloques[i] = bloque;
+				
+				x+=40;
 			}
 			
 	
 	}
+	NLadrillosRestantes = NLadrillos;
 }
 
 void DibujarPelota()

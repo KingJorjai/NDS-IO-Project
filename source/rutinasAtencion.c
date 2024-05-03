@@ -88,6 +88,7 @@ void RutAtencionTeclado()
 			{
 				
 				PonerEnMarchaTempo();
+				tiempo=0;
 				visualizarJuegoFondo();
 				DibujarPelota();
 				DibujarBloques();
@@ -114,7 +115,6 @@ void RutAtencionTempo()
 		{
 		case JUEGO:
 			tick++;
-			
 
 			if (tick==100)
 			{
@@ -127,7 +127,9 @@ void RutAtencionTempo()
 					seg10=1;
 				}
 			}
-
+			
+			ActualizarPelota();
+			DibujarPelota();
 			///
 			int pelotaTocaBarra = PelotaTocaBarra();
 			int pelotaTocaLadrillo = PelotaTocaLadrillo();
@@ -151,7 +153,7 @@ void RutAtencionTempo()
 			}
 
 			
-			if(pelotaTocaSuelo!=0 && vidas==1)
+			if(pelotaTocaSuelo!=0 && vidas==0)
 			{
 				OcultarPelota();
 				OcultarBarra();
@@ -160,8 +162,9 @@ void RutAtencionTempo()
 				ESTADO=PERDER;
 			}
 			
-			if(pelotaTocaLadrillo!=0 && NLadrillos==1)
+			if(pelotaTocaLadrillo!=0 && NLadrillosRestantes==0)
 			{
+				PararTempo();
 				OcultarPelota();
 				OcultarBarra();
 				OcultarBloques();
@@ -172,9 +175,6 @@ void RutAtencionTempo()
 			{
 				CalcularRebote(ARRIBA);
 			}
-
-			ActualizarPelota();
-			DibujarPelota();
 
 			break;
 	}

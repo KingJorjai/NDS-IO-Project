@@ -4,6 +4,7 @@ motor.h
 
 //Elementos
 extern int NLadrillos;
+extern int NLadrillosRestantes;
 
 typedef struct
 {
