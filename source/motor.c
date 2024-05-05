@@ -2,6 +2,7 @@
 #include <stdio.h>		// Librería de entrada/salida estándar de C
 #include <stdlib.h>		// Librería estándar de C para reserva de memoria y conversiones numéricas
 #include <unistd.h>		// Librería para asegurar la compatibilidad entre sistemas operativos
+#define _USE_MATH_DEFINES
 #include <math.h>		// Librería de funciones matemáticas
 
 #include "definiciones.h"
@@ -44,17 +45,16 @@ int PelotaTocaSuelo()
 */
 int PelotaTocaPared()
 {
-	if (pelota.y <= 0)
-		return ARRIBA;
+	if (pelota.y < 0)
+		return ABAJO;
 	
-	else if (pelota.x <= 0)
-		return IZQUIERDA;
-	
-	else if (pelota.x + PELOTA_ANCHO >= ANCHO_PANTALLA)
+	if (pelota.x < 0)
 		return DERECHA;
 	
-	else
-		return 0;
+	if (pelota.x + PELOTA_ANCHO > ANCHO_PANTALLA)
+		return IZQUIERDA;
+	
+	return 0;
 }
 
 /*
@@ -65,48 +65,86 @@ int PelotaTocaPared()
 */
 int PelotaTocaLadrillo()
 {	
-	Bloque bloque;
-	//int colision = 0; // Add variable declaration and initialize to 0
-	int vertical,horizontal,i;
+	int colision=0,vertical=0,horizontal=0,arriba=0,abajo=0,izquierda=0,derecha=0,i;
+	colision = 0;
+
+	Bloque bloque; // Bloque con el que colisiona
+	// double centroPelotaX; // Centro horizontal de la pelota
+	// double centroPelotaY; // Centro vertical de la pelota
 	
 	for(i=0; i<NLadrillos; i++)
 	{
 		bloque = bloques[i];
-
 		if (bloque.destruido == NO_DESTRUIDO)
 		{
-			vertical = (pelota.x+PELOTA_ANCHO > bloque.x && pelota.x < bloque.x+BLOQUE_ANCHO) // acotado horiz.
-				&& (pelota.y == bloque.y+BLOQUE_ALTO || pelota.y+PELOTA_ALTO == bloque.y );
-		
-			horizontal = (pelota.y+PELOTA_ALTO > bloque.y && pelota.y < bloque.y+BLOQUE_ALTO) // acotado vert.
-				&& (pelota.x == bloque.x+BLOQUE_ANCHO || pelota.x+PELOTA_ANCHO == bloque.x );
+			horizontal = (pelota.x+PELOTA_ANCHO > bloque.x && pelota.x < bloque.x+BLOQUE_ANCHO); // acotado horiz.
+			vertical = (pelota.y+PELOTA_ALTO > bloque.y && pelota.y < bloque.y+BLOQUE_ALTO); // acotado vert.
+			
+			if (horizontal && vertical)
+			{
+				colision = 1;
+			
+				if (pelota.y < bloque.y) arriba = 1;
+				if (pelota.y+PELOTA_ALTO > bloque.y+BLOQUE_ALTO) abajo = 1;
 
-		if (vertical || horizontal)
-		{
-			bloques[i].destruido = DESTRUIDO;
-			BorrarBloque(2+i,bloque.x,bloque.y);
-			NLadrillosRestantes -= 1;
+				if (pelota.x < bloque.x) izquierda = 1;
+				if (pelota.x+PELOTA_ANCHO > bloque.x+BLOQUE_ANCHO) derecha = 1;
+			}
+			
+			if (colision)
+			{
+				bloques[i].destruido = DESTRUIDO;
+				BorrarBloque(2+i,bloque.x,bloque.y);
+				NLadrillosRestantes -= 1;
 
-			if (vertical) return ABAJO;
-			if (horizontal) return IZQUIERDA;
+				if		(arriba && !abajo && !izquierda && !derecha) return ARRIBA;
+				else if (!arriba && abajo && !izquierda && !derecha) return ABAJO;
+				else if (!arriba && !abajo && izquierda && !derecha) return IZQUIERDA;
+				else if (!arriba && !abajo && !izquierda && derecha) return DERECHA;
+				else if (arriba && !abajo && izquierda && !derecha) return ARRIBA_IZQUIERDA;
+				else if (arriba && !abajo && !izquierda && derecha) return ARRIBA_DERECHA;
+				else if (!arriba && abajo && izquierda && !derecha) return ABAJO_IZQUIERDA;
+				else if (!arriba && abajo && !izquierda && derecha) return ABAJO_DERECHA;
+				else
+				{
+					pelota.vx = -pelota.vx;
+					pelota.vy = -pelota.vy;
+					return -1; // No debería llegar aquí
+				}
+			}
 		}
-		}
-		
 	}
-
-	return 0; // No hay colisión
+	return 0;
 }
 /**
  * Devuelve 1 si la pelota toca la barra, 0 en caso contrario.
 */
 int PelotaTocaBarra()
 {
-	if (pelota.y+PELOTA_ALTO > BARRA_Y_INICIAL
+	// Verdadero si la pelota está tocando la barra
+	int colision = pelota.y+PELOTA_ALTO > BARRA_Y_INICIAL
 		&& pelota.y+PELOTA_ALTO < BARRA_Y_INICIAL+BARRA_ALTO
 		&& pelota.x+PELOTA_ANCHO>=barra.x
-		&& barra.x+BARRA_ANCHO>=pelota.x)
+		&& pelota.x <= barra.x+BARRA_ANCHO;
+
+	if (colision)
 	{
-		pelota.vy = -fabs(pelota.vy);
+		double centroPelota = pelota.x + PELOTA_ANCHO/2;	// Centro horizontal de la pelota
+		double centroBarra = barra.x + BARRA_ANCHO/2;		// Centro horizontal de la barra
+
+		double desvio = centroPelota - centroBarra;	// Positivo si la pelota está a la derecha de la barra
+		double maxDesvio = BARRA_ANCHO/2;			// Máximo desvío posible
+		desvio = desvio/maxDesvio;					// Normalizar el desvío
+
+		const double limDesvio = 0.7;					// Límite de desvío
+		// Limitar el desvío
+		if (desvio > limDesvio) desvio = limDesvio;
+		if (desvio < -limDesvio) desvio = -limDesvio;
+
+		pelota.vx = desvio;							// Cambiar la velocidad horizontal
+		pelota.vy = -sqrt(1-pow(fabs(desvio),2));			// Cambiar la velocidad vertical
+
+
 		return 1;
 	}
 	else return 0;
@@ -121,13 +159,35 @@ void CalcularRebote(int direccion)
 	switch(direccion)
 	{
 		case ARRIBA:
-		case ABAJO:
-			pelota.vy = -pelota.vy;
+			pelota.vy = -fabs(pelota.vy);
 			break;
-		
+		case ABAJO:
+			pelota.vy = fabs(pelota.vy);
+			break;
 		case IZQUIERDA:
+			pelota.vx = -fabs(pelota.vx);
+			break;
 		case DERECHA:
-			pelota.vx = -pelota.vx;
+			pelota.vx = fabs(pelota.vx);
+			break;
+		case ARRIBA_IZQUIERDA:
+			pelota.vx = -fabs(pelota.vx);
+			pelota.vy = -fabs(pelota.vy);
+			break;
+		case ARRIBA_DERECHA:
+			pelota.vx = fabs(pelota.vx);
+			pelota.vy = -fabs(pelota.vy);
+			break;
+		case ABAJO_IZQUIERDA:
+			pelota.vx = -fabs(pelota.vx);
+			pelota.vy = fabs(pelota.vy);
+			break;
+		case ABAJO_DERECHA:
+			pelota.vx = fabs(pelota.vx);
+			pelota.vy = fabs(pelota.vy);
+			break;
+		case -1:
+			// No debería llegar aquí
 			break;
 	}
 }
@@ -141,9 +201,10 @@ void CalcularRebote(int direccion)
 */
 void InicializarPelota()
 {
-	// Arbitrario por ahora
-	pelota.vx = 0.5;
-	pelota.vy = 0.5;
+	pelota.vx = (( (double)(rand()%20) ) - 10) / 15;
+	pelota.vy = sqrt(1-pow(pelota.vx,2));
+	pelota.velocidad = PELOTA_V_INICIAL;
+
 	pelota.x = PELOTA_X_INICIAL;
 	pelota.y = PELOTA_Y_INICIAL;
 }
@@ -154,8 +215,8 @@ void InicializarPelota()
 */
 void ActualizarPelota()
 {
-	pelota.x += pelota.vx;
-	pelota.y += pelota.vy;
+	pelota.x += pelota.vx * pelota.velocidad;
+	pelota.y += pelota.vy * pelota.velocidad;
 }
 
 
@@ -174,9 +235,9 @@ void InicializarBarra()
 void ActualizarBarra()
 {
 	int x = TactilGetX();
-	if(x != barra.x && x > BARRA_ANCHO/2 && x < ANCHO_PANTALLA-BARRA_ANCHO/2)
+	if(x != barra.x-BARRA_ANCHO/2 && x > BARRA_ANCHO/2 && x < ANCHO_PANTALLA-BARRA_ANCHO/2)
 	{
-		barra.x = x;
+		barra.x = x-BARRA_ANCHO/2;
 	}
 }
 
@@ -236,7 +297,7 @@ void DibujarPelota()
 void DibujarBarra()
 {
 	int int_x;
-	int_x = (int) round(barra.x)-16;
+	int_x = (int) round(barra.x);
 	
 	MostrarBarra(1,int_x,BARRA_Y_INICIAL-BARRA_ALTO);
 }

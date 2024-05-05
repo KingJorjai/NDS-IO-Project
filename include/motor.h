@@ -1,6 +1,11 @@
 /*---------------------------------------------------------------------------------
 motor.h
 ---------------------------------------------------------------------------------*/
+// Direcciones extra
+#define ARRIBA_DERECHA 64
+#define ARRIBA_IZQUIERDA 65
+#define ABAJO_DERECHA 74
+#define ABAJO_IZQUIERDA 75
 
 //Elementos
 extern int NLadrillos;
@@ -8,6 +13,8 @@ extern int NLadrillosRestantes;
 
 typedef struct
 {
+	double velocidad;	// Velocidad de la pelota
+
 	double vx;	// Velocidad horizontal
 	double vy;	// Velocidad vertical
 	
@@ -42,7 +49,7 @@ extern void CalcularRebote(int direccion);
 
 
 // Pelota
-#define VPELOTA_BASE 1		// Pendiente de revisar
+#define PELOTA_V_INICIAL 0.5
 #define PELOTA_X_INICIAL 128
 #define PELOTA_Y_INICIAL 81
 #define PELOTA_ANCHO 16
