@@ -68,6 +68,7 @@ extern void ActualizarPelota();
 #define BARRA_Y_INICIAL	146
 #define BARRA_ANCHO 32
 #define BARRA_ALTO 16
+#define BARRA_VX 0.1
 void InicializarBarra();
 
 // Dibujar Sprites

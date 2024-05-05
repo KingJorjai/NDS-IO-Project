@@ -101,8 +101,27 @@ void juego()
 				if(TactilTocada())
 				{
 					ActualizarBarra();
-					DibujarBarra();
 				}
+				if (tecla != -1)
+				{
+					switch (tecla)
+					{
+					case DERECHA:
+						// Mover la barra a la derecha
+						if (barra.x > 0)
+						{
+							barra.x -= BARRA_VX;
+						}
+						break;
+					case IZQUIERDA:
+						// Mover la barra a la izquierda
+						if (barra.x < ANCHO_PANTALLA - BARRA_ANCHO)
+						{
+							barra.x += BARRA_VX;
+						}
+					}
+				}
+				
 
 				break;
 			

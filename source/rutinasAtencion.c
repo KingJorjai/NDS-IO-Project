@@ -130,6 +130,7 @@ void RutAtencionTempo()
 			
 			ActualizarPelota();
 			DibujarPelota();
+			DibujarBarra();
 			///
 			int pelotaTocaBarra = PelotaTocaBarra();
 			int pelotaTocaLadrillo = PelotaTocaLadrillo();
