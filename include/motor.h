@@ -65,7 +65,7 @@ extern void ActualizarPelota();
 
 // Barra
 #define BARRA_X_INICIAL 96
-#define BARRA_Y_INICIAL	146
+#define BARRA_Y_INICIAL	160
 #define BARRA_ANCHO 32
 #define BARRA_ALTO 16
 #define BARRA_VX 0.1

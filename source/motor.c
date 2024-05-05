@@ -93,9 +93,13 @@ int PelotaTocaLadrillo()
 			
 			if (colision)
 			{
+				// Destruir el bloque
 				bloques[i].destruido = DESTRUIDO;
 				BorrarBloque(2+i,bloque.x,bloque.y);
 				NLadrillosRestantes -= 1;
+
+				// Aumentar la velocidad de la pelota
+				pelota.velocidad += 0.1;
 
 				if		(arriba && !abajo && !izquierda && !derecha) return ARRIBA;
 				else if (!arriba && abajo && !izquierda && !derecha) return ABAJO;
@@ -142,8 +146,9 @@ int PelotaTocaBarra()
 		if (desvio < -limDesvio) desvio = -limDesvio;
 
 		pelota.vx = desvio;							// Cambiar la velocidad horizontal
-		pelota.vy = -sqrt(1-pow(fabs(desvio),2));			// Cambiar la velocidad vertical
+		pelota.vy = -sqrt(1-pow(fabs(desvio),2));	// Cambiar la velocidad vertical
 
+		pelota.velocidad += 0.05;					// Aumentar la velocidad de la pelota
 
 		return 1;
 	}
