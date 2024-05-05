@@ -80,7 +80,7 @@ void juego()
 		if (TeclaDetectada())
 		{
 			tecla = TeclaPulsada();
-			iprintf("\x1b[12;0HLa tecla pulsada es: %d", tecla);
+			iprintf("\x1b[0;0HLa tecla pulsada es: %d", tecla);
 
 		}
 
@@ -101,41 +101,27 @@ void juego()
 				if(TactilTocada())
 				{
 					ActualizarBarra();
-					DibujarBarra();
+				}
+				if (tecla != -1)
+				{
+					switch (tecla)
+					{
+					case DERECHA:
+						// Mover la barra a la derecha
+						if (barra.x > 0)
+						{
+							barra.x -= BARRA_VX;
+						}
+						break;
+					case IZQUIERDA:
+						// Mover la barra a la izquierda
+						if (barra.x < ANCHO_PANTALLA - BARRA_ANCHO)
+						{
+							barra.x += BARRA_VX;
+						}
+					}
 				}
 				
-				if(PelotaTocaLadrillo()!=0 && NLadrillos>1)
-				{
-					CalcularRebote(PelotaTocaLadrillo());
-				}		
-				
-				if(PelotaTocaSuelo()!=0 && vidas > 1)
-				{
-					InicializarPelota();
-					vidas -= 1;
-				}
-				
-				if(PelotaTocaPared()!=0)
-				{
-					CalcularRebote(PelotaTocaPared());	// El cambio de pantalla
-				}
-				
-				if(PelotaTocaSuelo()!=0 && vidas==1)
-				{
-					OcultarPelota();
-					OcultarBarra();
-					OcultarBloques();
-					visualizarPerder();
-					ESTADO=PERDER;
-				}
-				
-				if(PelotaTocaLadrillo()!=0 && NLadrillos==1)
-				{
-					OcultarPelota();
-					OcultarBarra();
-					visualizarGanar();
-					ESTADO=GANAR;
-				}
 
 				break;
 			
