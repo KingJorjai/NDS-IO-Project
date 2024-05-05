@@ -98,7 +98,7 @@ void RutAtencionTeclado()
 			break;
 		
 		case PERDER: case GANAR:
-			if (tecla==A)
+			if (tecla==START || tecla==A)
 			{
 				NivelActual = 1;
 				visualizarNivel();
