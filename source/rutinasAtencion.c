@@ -43,8 +43,12 @@ void RutAtencionTeclado()
 				DibujarPelota();
 				DibujarBarra();
 				DibujarBloques();
+				PonerEnMarchaTempo();
+				tick = 0;
+				seg10 = 0;
+				tiempo= 0;
 				vidas = 3;
-				ESTADO=ESPERA;
+				ESTADO=JUEGO;
 			}
 			else
 			// Cambio de nivel
@@ -58,17 +62,6 @@ void RutAtencionTeclado()
 					RestarNivel();
 					visualizarNivel();
 				}
-			break;
-
-		case ESPERA:
-			if (tecla==START || tecla==A)
-			{
-				PonerEnMarchaTempo();
-				tick = 0;
-				seg10 = 0;
-				tiempo= 0;
-				ESTADO=JUEGO;
-			}
 			break;
 
 		case JUEGO:

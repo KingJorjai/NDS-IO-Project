@@ -92,10 +92,6 @@ void juego()
 				
 				break;
 			
-			case ESPERA:
-				
-				break;
-			
 			case JUEGO:
 				
 				if(TactilTocada())
