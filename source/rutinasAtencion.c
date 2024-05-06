@@ -43,8 +43,12 @@ void RutAtencionTeclado()
 				DibujarPelota();
 				DibujarBarra();
 				DibujarBloques();
+				PonerEnMarchaTempo();
+				tick = 0;
+				seg10 = 0;
+				tiempo= 0;
 				vidas = 3;
-				ESTADO=ESPERA;
+				ESTADO=JUEGO;
 			}
 			else
 			// Cambio de nivel
@@ -60,35 +64,50 @@ void RutAtencionTeclado()
 				}
 			break;
 
-		case ESPERA:
-			if (tecla==START || tecla==A)
-			{
-				PonerEnMarchaTempo();
-				tick = 0;
-				seg10 = 0;
-				tiempo= 0;
-				ESTADO=JUEGO;
-			}
-			break;
-
 		case JUEGO:
 			if (tecla==START)
 			{
 				PararTempo();
-				visualizarPausa();
+				visualizarPausaReanudar();
 				OcultarPelota();
 				OcultarBloques();
 				OcultarBarra();
-				ESTADO=PAUSA;
+				ESTADO=PAUSA_REANUDAR;
 			}
 			break;
 
-		case PAUSA:
-			if (tecla==START)
+		case PAUSA_REANUDAR:
+			if (tecla==START || tecla==A)
 			{
 				
 				PonerEnMarchaTempo();
-				tiempo=0;
+				visualizarJuegoFondo();
+				DibujarPelota();
+				DibujarBloques();
+				DibujarBarra();
+				ESTADO=JUEGO;
+			}
+			if (tecla==ARRIBA || tecla==ABAJO)
+			{
+				visualizarPausaVolver();
+				ESTADO=PAUSA_VOLVER;
+			}
+			
+			break;
+		case PAUSA_VOLVER:
+			if (tecla==A)
+			{
+				visualizarNivel();
+				ESTADO=MENU_SELECTOR;
+			}
+			if (tecla==ARRIBA || tecla==ABAJO)
+			{
+				visualizarPausaReanudar();
+				ESTADO=PAUSA_REANUDAR;
+			}
+			if (tecla==START)
+			{
+				PonerEnMarchaTempo();
 				visualizarJuegoFondo();
 				DibujarPelota();
 				DibujarBloques();
