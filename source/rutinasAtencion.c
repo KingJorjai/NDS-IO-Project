@@ -8,60 +8,173 @@ rutinasAtencion.c
 #include "perifericos.h"
 #include "fondos.h"
 #include "sprites.h"
+#include "motor.h"
+#include "menu.h"
 
-int ESTADO; // Para controlar el estado del autómata en que esté
-int seg3;   // Para ver si pasan tres segundos
+int ESTADO;	// Para controlar el estado del autómata en que esté
+int seg10;	// Para ver si pasan diez segundos
+int tiempo;	// Lleva la cuenta de los segundos que pasan
+int tick;	// Se suma uno en cada interrupción de KTimer0
+int vidas;	// Vidas restantes
 
-// TODO:
-// - Arreglar las interrupciones del teclado
-//	Puede ser literalmente cualquier cosa
-//	Las interrupciones de Timer0 en principio funcionan bien
 void RutAtencionTeclado()
 {
-	if (ESTADO == CERRADA)
+	int tecla = TeclaPulsada();
+	switch (ESTADO)
 	{	
-		if (TeclaPulsada()==A)
-		{
-			ESTADO=ABIERTA;
-			visualizarPuertaAbierta();
-			seg3=0;
-			MostrarRombo(1, 5, 5);
-			MostrarRomboGrande(2, 100, 100);
-		}
+		case MENU_INICIO:
+			if (tecla==START)
+			{
+				NivelActual=1;
+				visualizarNivel();	// Fondo
+				ESTADO=MENU_SELECTOR;
+			}
+			break;
+
+		case MENU_SELECTOR:
+		
+			// Selección de nivel
+			if (tecla==A)
+			{
+				visualizarJuegoFondo();
+				CargarNivel();
+				InicializarBarra();
+				InicializarPelota();
+				DibujarPelota();
+				DibujarBarra();
+				DibujarBloques();
+				vidas = 3;
+				ESTADO=ESPERA;
+			}
+			else
+			// Cambio de nivel
+			if (tecla == ABAJO)
+				{
+					SumarNivel();
+					visualizarNivel();
+				}
+			else if (tecla == ARRIBA)
+				{
+					RestarNivel();
+					visualizarNivel();
+				}
+			break;
+
+		case ESPERA:
+			if (tecla==START || tecla==A)
+			{
+				PonerEnMarchaTempo();
+				tick = 0;
+				seg10 = 0;
+				tiempo= 0;
+				ESTADO=JUEGO;
+			}
+			break;
+
+		case JUEGO:
+			if (tecla==START)
+			{
+				PararTempo();
+				visualizarPausa();
+				OcultarPelota();
+				OcultarBloques();
+				OcultarBarra();
+				ESTADO=PAUSA;
+			}
+			break;
+
+		case PAUSA:
+			if (tecla==START)
+			{
+				
+				PonerEnMarchaTempo();
+				tiempo=0;
+				visualizarJuegoFondo();
+				DibujarPelota();
+				DibujarBloques();
+				DibujarBarra();
+				ESTADO=JUEGO;
+			}
+			break;
+		
+		case PERDER: case GANAR:
+			if (tecla==START || tecla==A)
+			{
+				NivelActual = 1;
+				visualizarNivel();
+				ESTADO=MENU_SELECTOR;
+			}
+			break;
 	}
 }
 
 void RutAtencionTempo()
 {
-	static int tick=0;
 	static int seg=0;
-	
-
-if (ESTADO!=ESPERA)
-{
-	tick++; 
-	if (tick==5)
-	{
-		seg++;
-		iprintf("\x1b[13;0HSegundos que han pasado=%d", seg); // Visualizar(Seg)
-		tick=0;
-		
-		if (ESTADO == ABIERTA)
+	switch (ESTADO)
 		{
-			seg3++;
-			if (seg3==3)
+		case JUEGO:
+			tick++;
+
+			if (tick==100)
 			{
-				visualizarPuerta();
-				seg3=0;
-				ESTADO=CERRADA;
-				BorrarRombo(1, 5, 5);
-				BorrarRomboGrande(2, 100, 100);
+				tick=0;
+				seg++;
+				tiempo++;
+				if (seg==10)
+				{
+					seg=0;
+					seg10=1;
+				}
 			}
-		}
-				
+			
+			ActualizarPelota();
+			DibujarPelota();
+			DibujarBarra();
+			///
+			int pelotaTocaBarra = PelotaTocaBarra();
+			int pelotaTocaLadrillo = PelotaTocaLadrillo();
+			int pelotaTocaPared = PelotaTocaPared();
+			int pelotaTocaSuelo = PelotaTocaSuelo();
+
+			if(pelotaTocaLadrillo!=0 && NLadrillos>1)
+			{
+				CalcularRebote(pelotaTocaLadrillo);
+			}		
+			
+			if(pelotaTocaSuelo!=0 && vidas != 0)
+			{
+				InicializarPelota();
+				vidas -= 1;
+			}
+			
+			if(pelotaTocaPared!=0)
+			{
+				CalcularRebote(pelotaTocaPared);
+			}
+
+			
+			if(pelotaTocaSuelo!=0 && vidas==0)
+			{
+				OcultarPelota();
+				OcultarBarra();
+				OcultarBloques();
+				visualizarPerder();
+				ESTADO=PERDER;
+			}
+			
+			if(NLadrillosRestantes==0)
+			{
+				PararTempo();
+				OcultarPelota();
+				OcultarBarra();
+				OcultarBloques();
+				visualizarGanar();
+				ESTADO=GANAR;
+			}
+
+			break;
 	}
-}
-	
 }
 
 void EstablecerVectorInt()

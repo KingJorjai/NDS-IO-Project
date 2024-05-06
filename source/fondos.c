@@ -8,44 +8,75 @@
 
 #include "fondos.h"
 #include "graficos.h"
-#include "FondoUno.h"
-#include "FondoDos.h"
-#include "Puerta.h"
-#include "PuertaAbierta.h"
+#include "MenuInicio.h"
+#include "Nivel1.h"
+#include "Nivel2.h"
+#include "Nivel3.h"
+#include "JuegoFondo.h"
+#include "Pausa.h"
+#include "Ganar.h"
+#include "Perder.h"
 
 /* Se elige el canal de DMA que se utilizará para copiar las imágenes en memoria */
 static const int DMA_CHANNEL = 3;
 
 /* Para cada fondo que se quiera visualizar hay que escribir un procedimiento como el siguiente */
 
-void visualizarFondoUno() {
-	
+void visualizarMenuInicio() {
 	dmaCopyHalfWords(DMA_CHANNEL,
-                     FondoUnoBitmap, /* Variable que se genera automáticamente */
-                     (uint16 *)BG_BMP_RAM(0), /* Dirección del fondo principal */
-                     FondoUnoBitmapLen); /* Longitud en bytes, variable que se genera automáticamente */
+        MenuInicioBitmap, /* Variable que se genera automáticamente */
+        (uint16 *)BG_BMP_RAM(0), /* Dirección del fondo principal */
+        MenuInicioBitmapLen); /* Longitud en bytes, variable que se genera automáticamente */
 }
 
-void visualizarFondoDos() {
-		
+int NivelActual;
+void visualizarNivel() {
+	if (NivelActual == 1) {
 	dmaCopyHalfWords(DMA_CHANNEL,
-                     FondoDosBitmap, /* Variable que se genera automáticamente */
-                     (uint16 *)BG_BMP_RAM(0), /* Dirección del fondo principal */
-                     FondoDosBitmapLen); /* Longitud en bytes, variable que se genera automáticamente */
+        Nivel1Bitmap, /* Variable que se genera automáticamente */
+        (uint16 *)BG_BMP_RAM(0), /* Dirección del fondo principal */
+        Nivel1BitmapLen); /* Longitud en bytes, variable que se genera automáticamente */
+    }
+
+    if (NivelActual == 2) {
+	dmaCopyHalfWords(DMA_CHANNEL,
+        Nivel2Bitmap, /* Variable que se genera automáticamente */
+        (uint16 *)BG_BMP_RAM(0), /* Dirección del fondo principal */
+        Nivel2BitmapLen); /* Longitud en bytes, variable que se genera automáticamente */
+    }
+
+    if (NivelActual == 3) {
+	dmaCopyHalfWords(DMA_CHANNEL,
+        Nivel3Bitmap, /* Variable que se genera automáticamente */
+        (uint16 *)BG_BMP_RAM(0), /* Dirección del fondo principal */
+        Nivel3BitmapLen); /* Longitud en bytes, variable que se genera automáticamente */
+    }
 }
 
-void visualizarPuerta() {
-		
+void visualizarJuegoFondo() {
 	dmaCopyHalfWords(DMA_CHANNEL,
-                     PuertaBitmap, /* Variable que se genera automáticamente */
-                     (uint16 *)BG_BMP_RAM(0), /* Dirección del fondo principal */
-                     PuertaBitmapLen); /* Longitud en bytes, variable que se genera automáticamente */
+        JuegoFondoBitmap, /* Variable que se genera automáticamente */
+        (uint16 *)BG_BMP_RAM(0), /* Dirección del fondo principal */
+        JuegoFondoBitmapLen); /* Longitud en bytes, variable que se genera automáticamente */
 }
 
-void visualizarPuertaAbierta() {
-	
+void visualizarPausa() {
 	dmaCopyHalfWords(DMA_CHANNEL,
-			 PuertaAbiertaBitmap, /* Variable que se genera automáticamente */
-			 (uint16 *)BG_BMP_RAM(0), /* Dirección del fondo principal */
-			 PuertaAbiertaBitmapLen); /* Longitud en bytes, variable que se genera automáticamente */
+        PausaBitmap, /* Variable que se genera automáticamente */
+        (uint16 *)BG_BMP_RAM(0), /* Dirección del fondo principal */
+        PausaBitmapLen); /* Longitud en bytes, variable que se genera automáticamente */
+}
+
+void visualizarGanar() {
+	dmaCopyHalfWords(DMA_CHANNEL,
+        GanarBitmap, /* Variable que se genera automáticamente */
+        (uint16 *)BG_BMP_RAM(0), /* Dirección del fondo principal */
+        GanarBitmapLen); /* Longitud en bytes, variable que se genera automáticamente */
+}
+
+void visualizarPerder() {
+	dmaCopyHalfWords(DMA_CHANNEL,
+        PerderBitmap, /* Variable que se genera automáticamente */
+        (uint16 *)BG_BMP_RAM(0), /* Dirección del fondo principal */
+        PerderBitmapLen); /* Longitud en bytes, variable que se genera automáticamente */
 }

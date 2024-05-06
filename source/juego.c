@@ -15,19 +15,33 @@ y en otro ejemplo de Jaeden Ameronen
 #include "perifericos.h"
 #include "rutinasAtencion.h"
 #include "fondos.h"
+#include "menu.h"
+#include "motor.h"
 
 // Variables globales
-	int tiempo;	// ¿Esta de dónde sale?
-	int seg;	// Rutina Ktimer0 - Escribir cuántos segundos han pasado
+	int tiempo;		// ¿Esta de dónde sale?
+	int seg10;		// Para contar cada 10 segundos
+	int NivelActual;	// Nivel seleccionado en el menú de selección
+	touchPosition DatosPantalla;
+	
+// Elementos del juego
+	Barra barra;
+	Pelota pelota;
+	int NLadrillos;
 
 void juego()
 {	
 	// Definiciones de variables
-	int tecla = 0;
-
+	int tecla = -1;
+	touchPosition pos_pantalla;
 	// Estado inicial
-	ESTADO=ESPERA;
-	
+	ESTADO=MENU_INICIO;
+	visualizarMenuInicio();
+	NivelActual = 1;
+
+	//vidas
+	int vidas;
+
 	// Configuración interrupciones
 		
 		// Interrupt Patcher
@@ -38,61 +52,97 @@ void juego()
 			// Generar interrupción al desbordar	---> Bit 6
 			// División de frecuencia: 1024		---> Bits 1,0
 			int conf_Tempo	= 0x00C3;	// 0000 0000 1100 0011
-			int latch 	= 58982; 	// 5 interrupciones por segundo
+			int latch 	= 65208; 	// 100 interrupciones por segundo
 			ConfigurarTemporizador(latch, conf_Tempo);
 			HabilitarIntTempo();
 		// Teclado
-			// Activar interrupciones por parte de la tecla A ---> Bit 0
-			// Activar interrupciones por parte del teclado   ---> Bit 14
-			int conf_Tec	= 0x4001;	// 0100 0000 0000 0001
+			// Activar interrupciones por parte de la tecla A		---> Bit 0
+			// Activar interrupciones por parte de la tecla START	---> Bit 3
+			// Activar interrupciones por parte de la tecla ARRIBA	---> Bit 6
+			// Activar interrupciones por parte de la tecla ABAJO	---> Bit 7
+			// Activar interrupciones por parte del teclado			---> Bit 14
+			int conf_Tec	= 0x40C9;	// 0100 0000 1100 1001
 			ConfigurarTeclado(conf_Tec);
 			HabilitarIntTeclado();
 
+
+			//Entrada menu inicio
+			visualizarMenuInicio();
+			//Espera a juego
+			int tic;
+			int seg10;
+			int tiempo;
+
 	// Bucle principal del juego
 	while(1)
-	{	
-		// Autómata
+	{
+		// Encuesta del teclado
+		if (TeclaDetectada())
+		{
+			tecla = TeclaPulsada();
+			iprintf("\x1b[0;0HLa tecla pulsada es: %d", tecla);
+
+		}
+
 		switch (ESTADO)
 		{
+				break;
+			
+			case MENU_SELECTOR:
+				
+				break;
+			
 			case ESPERA:
 				
-				// Encuesta del teclado
-				if (TeclaDetectada())
+				break;
+			
+			case JUEGO:
+				
+				if(TactilTocada())
 				{
-					// Ktec: <tecla>
-					
-						// Visualizar(tecla)
-						tecla = TeclaPulsada();
-						iprintf("\x1b[12;0HLa tecla pulsada es: %d", tecla);
-					
-					// Ktec: <START>
-					if (tecla == START)
+					ActualizarBarra();
+				}
+				if (tecla != -1)
+				{
+					switch (tecla)
 					{
-						visualizarPuerta();
-						PonerEnMarchaTempo();
-						seg=0;
-						ESTADO = CERRADA;
+					case DERECHA:
+						// Mover la barra a la derecha
+						if (barra.x > 0)
+						{
+							barra.x -= BARRA_VX;
+						}
+						break;
+					case IZQUIERDA:
+						// Mover la barra a la izquierda
+						if (barra.x < ANCHO_PANTALLA - BARRA_ANCHO)
+						{
+							barra.x += BARRA_VX;
+						}
 					}
 				}
+				
+
 				break;
 			
-			case CERRADA:
+			case PAUSA:
 				
-				// No hay nada por ahora - Se gestiona por Interrupción
 				
 				break;
 			
-			case ABIERTA:
+			case GANAR:
 				
-				// No hay nada por ahora - Se gestiona por Interrupción
+				
+				break;
+			
+			case PERDER:
+				
 				
 				break;
 		}
 
+		tecla = -1; // Reiniciar la tecla pulsada
 
 	}
 	// Valorar si hay que inhibir las interrupciones
 }
-
-
-

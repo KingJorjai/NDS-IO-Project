@@ -4,7 +4,9 @@
 fondos.h
 -------------------------------------*/
 
-extern void visualizarFondoUno();
-extern void visualizarFondoDos();
-extern void visualizarPuerta();
-extern void visualizarPuertaAbierta();
+extern void visualizarMenuInicio();
+extern void visualizarNivel();
+extern void visualizarJuegoFondo();
+extern void visualizarPausa();
+extern void visualizarGanar();
+extern void visualizarPerder();
