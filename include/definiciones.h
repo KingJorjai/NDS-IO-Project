@@ -49,9 +49,9 @@ touchPosition PANT_DAT;
 // Nombres asignados a los estados
 #define MENU_INICIO 0
 #define MENU_SELECTOR 1
-#define ESPERA 2
-#define JUEGO 3
-#define PAUSA 4
+#define JUEGO 2
+#define PAUSA_REANUDAR 3
+#define PAUSA_VOLVER 4
 #define PERDER 5
 #define GANAR 6
 
