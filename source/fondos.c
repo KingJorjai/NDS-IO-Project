@@ -13,7 +13,8 @@
 #include "Nivel2.h"
 #include "Nivel3.h"
 #include "JuegoFondo.h"
-#include "Pausa.h"
+#include "PausaReanudar.h"
+#include "PausaVolver.h"
 #include "Ganar.h"
 #include "Perder.h"
 
@@ -60,11 +61,18 @@ void visualizarJuegoFondo() {
         JuegoFondoBitmapLen); /* Longitud en bytes, variable que se genera automáticamente */
 }
 
-void visualizarPausa() {
+void visualizarPausaReanudar() {
 	dmaCopyHalfWords(DMA_CHANNEL,
-        PausaBitmap, /* Variable que se genera automáticamente */
+        PausaReanudarBitmap, /* Variable que se genera automáticamente */
         (uint16 *)BG_BMP_RAM(0), /* Dirección del fondo principal */
-        PausaBitmapLen); /* Longitud en bytes, variable que se genera automáticamente */
+        PausaReanudarBitmapLen); /* Longitud en bytes, variable que se genera automáticamente */
+}
+
+void visualizarPausaVolver() {
+	dmaCopyHalfWords(DMA_CHANNEL,
+        PausaVolverBitmap, /* Variable que se genera automáticamente */
+        (uint16 *)BG_BMP_RAM(0), /* Dirección del fondo principal */
+        PausaVolverBitmapLen); /* Longitud en bytes, variable que se genera automáticamente */
 }
 
 void visualizarGanar() {

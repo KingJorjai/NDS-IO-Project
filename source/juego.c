@@ -125,7 +125,12 @@ void juego()
 
 				break;
 			
-			case PAUSA:
+			case PAUSA_REANUDAR:
+				
+				
+				break;
+
+			case PAUSA_VOLVER:
 				
 				
 				break;

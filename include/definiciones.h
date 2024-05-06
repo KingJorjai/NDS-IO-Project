@@ -51,9 +51,10 @@ touchPosition PANT_DAT;
 #define MENU_SELECTOR 1
 #define ESPERA 2
 #define JUEGO 3
-#define PAUSA 4
-#define PERDER 5
-#define GANAR 6
+#define PAUSA_REANUDAR 4
+#define PAUSA_VOLVER 5
+#define PERDER 6
+#define GANAR 7
 
 // Variables globales
 extern int ESTADO;
