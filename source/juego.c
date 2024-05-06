@@ -86,12 +86,6 @@ void juego()
 
 		switch (ESTADO)
 		{
-				break;
-			
-			case MENU_SELECTOR:
-				
-				break;
-			
 			case JUEGO:
 				
 				if(TactilTocada())
@@ -117,27 +111,6 @@ void juego()
 						}
 					}
 				}
-				
-
-				break;
-			
-			case PAUSA_REANUDAR:
-				
-				
-				break;
-
-			case PAUSA_VOLVER:
-				
-				
-				break;
-			
-			case GANAR:
-				
-				
-				break;
-			
-			case PERDER:
-				
 				
 				break;
 		}
