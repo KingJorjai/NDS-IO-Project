@@ -256,15 +256,16 @@ void ActualizarBarra()
 void CargarNivel()
 {
 	int i,x,y;
+	Bloque bloque;
+	bloque.destruido = NO_DESTRUIDO;
+
 	switch(NivelActual)
 	{
-		default:
-			NLadrillos = 12;
-			x = 10; y = 10;
-			Bloque bloque;
-			bloque.destruido = NO_DESTRUIDO;
+		case 2:
+			NLadrillos = 18;
+			x = 10; y = 0;
 
-			for (i=0; i<NLadrillos/2; i++)
+			for (i=0; i<6; i++)
 			{
 				
 				bloque.x = x;
@@ -274,8 +275,20 @@ void CargarNivel()
 				
 				x+=40;
 			}
+
+			x = 10; y = 20;
+			for (i=6; i<12; i++)
+			{
+				bloque.x = x;
+				bloque.y = y;
+
+				bloques[i] = bloque;
+				
+				x+=40;
+			}
+
 			x = 10; y = 40;
-			for (i=NLadrillos/2; i<NLadrillos; i++)
+			for (i=12; i<18; i++)
 			{
 				bloque.x = x;
 				bloque.y = y;
@@ -284,8 +297,70 @@ void CargarNivel()
 				
 				x+=40;
 			}
+			break;
 			
-	
+		case 1:
+			NLadrillos = 12;
+			x = 10; y = 0;
+			for (i=0; i<3; i++)
+			{
+				bloque.x = x;
+				bloque.y = y;
+
+				bloques[i] = bloque;
+				
+				x+=80;
+			}
+
+			x = 50; y = 20;
+			for (i=3; i<6; i++)
+			{
+				bloque.x = x;
+				bloque.y = y;
+
+				bloques[i] = bloque;
+				
+				x+=80;
+			}
+
+			x = 10; y = 40;
+			for (i=6; i<9; i++)
+			{
+				bloque.x = x;
+				bloque.y = y;
+
+				bloques[i] = bloque;
+				
+				x+=80;
+			}
+
+			x = 50; y = 60;
+			for (i=9; i<12; i++)
+			{
+				bloque.x = x;
+				bloque.y = y;
+
+				bloques[i] = bloque;
+				
+				x+=80;
+			}
+			break;
+
+		case 3:
+			NLadrillos = 8;
+			// Dibujar un círculo de bloques
+			bloque.x = 42; bloque.y = 0; bloques[0] = bloque;
+			bloque.x = 42; bloque.y = 16; bloques[1] = bloque;
+			bloque.x = 0; bloque.y = 32; bloques[2] = bloque;
+			bloque.x = 0; bloque.y = 48; bloques[3] = bloque;
+			bloque.x = 74; bloque.y = 32; bloques[4] = bloque;
+			bloque.x = 74; bloque.y = 48; bloques[5] = bloque;
+			bloque.x = 42; bloque.y = 64; bloques[6] = bloque;
+			bloque.x = 42; bloque.y = 80; bloques[7] = bloque;
+			
+
+			
+			break;
 	}
 	NLadrillosRestantes = NLadrillos;
 }
