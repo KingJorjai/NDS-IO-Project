@@ -73,6 +73,7 @@ void InicializarBarra();
 
 // Dibujar Sprites
 extern void CargarNivel();
+void cargarBloques(char nivel[4][8]);
 
 extern void DibujarPelota();
 extern void DibujarBarra();

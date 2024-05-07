@@ -255,37 +255,61 @@ void ActualizarBarra()
 */
 void CargarNivel()
 {
-	int i,x,y;
+	char nivel1[4][8] = {
+		"###  # ",
+		" #  # #",
+		" #  ###",
+		"##  # #"
+	};
+	char nivel2[4][8] = {
+		"#   ###",
+		"#   #  ",
+		"#   # #",
+		"### ###"
+	};
+	char nivel3[4][8] = {
+		"### ###",
+		"#   #  ",
+		"# # # #",
+		"### ###"
+	};
+
 	switch(NivelActual)
 	{
-		default:
-			NLadrillos = 12;
-			x = 10; y = 10;
-			Bloque bloque;
-			bloque.destruido = NO_DESTRUIDO;
+		case 1: default:
+			cargarBloques(nivel1);
+			break;
+		case 2:
+			cargarBloques(nivel2);
+			break;
+		case 3:
+			cargarBloques(nivel3);
+			break;
+	}
 
-			for (i=0; i<NLadrillos/2; i++)
+	NLadrillosRestantes = NLadrillos;
+}
+
+void cargarBloques(char nivel[4][8])
+{
+	static const int espaciado = 4;
+	Bloque bloque; int i=0,j=0;
+	bloque.destruido = NO_DESTRUIDO;
+	NLadrillos = 0;
+
+	for (j = 0; j < 4; j++)
+	{
+		for (i = 0; i < 7; i++)
+		{
+			if (nivel[j][i] == '#')
 			{
-				
-				bloque.x = x;
-				bloque.y = y;
-
-				bloques[i] = bloque;
-				
-				x+=40;
+				bloque.x = espaciado + i*(BLOQUE_ANCHO+espaciado);
+				bloque.y = espaciado + j*(BLOQUE_ALTO+espaciado);
+				bloques[NLadrillos] = bloque;
+				NLadrillos++;
 			}
-			x = 10; y = 40;
-			for (i=NLadrillos/2; i<NLadrillos; i++)
-			{
-				bloque.x = x;
-				bloque.y = y;
-
-				bloques[i] = bloque;
-				
-				x+=40;
-			}
-			
-	
+		}
+		
 	}
 	NLadrillosRestantes = NLadrillos;
 }
