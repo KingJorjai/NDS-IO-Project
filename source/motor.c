@@ -255,19 +255,22 @@ void ActualizarBarra()
 */
 void CargarNivel()
 {
-	char nivel1[3][8] = {
-		"#######",
-		"#     #",
-		"#######"
+	char nivel1[4][8] = {
+		"###  # ",
+		" #  # #",
+		" #  ###",
+		"##  # #"
 	};
-	char nivel2[3][8] = {
-		"# ### #",
-		"# # # #",
+	char nivel2[4][8] = {
+		"#   ###",
+		"#   #  ",
+		"#   # #",
 		"### ###"
 	};
-	char nivel3[3][8] = {
+	char nivel3[4][8] = {
 		"### ###",
-		"# ### #",
+		"#   #  ",
+		"# # # #",
 		"### ###"
 	};
 
@@ -287,14 +290,14 @@ void CargarNivel()
 	NLadrillosRestantes = NLadrillos;
 }
 
-void cargarBloques(char nivel[3][8])
+void cargarBloques(char nivel[4][8])
 {
 	static const int espaciado = 4;
 	Bloque bloque; int i=0,j=0;
 	bloque.destruido = NO_DESTRUIDO;
 	NLadrillos = 0;
 
-	for (j = 0; j < 3; j++)
+	for (j = 0; j < 4; j++)
 	{
 		for (i = 0; i < 7; i++)
 		{
