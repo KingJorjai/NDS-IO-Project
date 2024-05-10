@@ -172,7 +172,7 @@ void RutAtencionTempo()
 			if(pelotaTocaLadrillo!=0 && NLadrillos>1)
 			{
 				CalcularRebote(pelotaTocaLadrillo);
-				puntuacion += 100;
+				puntuacion += 133;
 				mostrarInfo();
 			}		
 			
