@@ -8,9 +8,7 @@ extern u16* gfxSub;
 extern void memoriaReserva();
 
 /* Para cada uno de los 256 valores que puede tomar un Píxel le da un color en la pantalla secundaria. El valor 0 es transparente y los valores sin definir negros */
-extern void EstablecerPaletaPelota();
-extern void EstablecerPaletaBloque();
-extern void EstablecerPaletaBarra();
+extern void EstablecerPaletaPrincipal();
 
 /* Carga en memoria los Sprites dibujados */
 extern void GuardarSpritesMemoria();
