@@ -4,6 +4,7 @@ rutinasAtencion.c
 
 #include <nds.h>
 #include <stdio.h>
+#include <math.h>
 #include "definiciones.h"
 #include "perifericos.h"
 #include "fondos.h"
@@ -164,7 +165,7 @@ void RutAtencionTempo()
 			if(pelotaTocaLadrillo!=0 && NLadrillos>1)
 			{
 				CalcularRebote(pelotaTocaLadrillo);
-				puntuacion += 133;
+				puntuacion += 133 + 200/log(tiempo+10);
 				mostrarInfo();
 			}		
 			
