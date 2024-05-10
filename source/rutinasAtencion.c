@@ -131,6 +131,7 @@ void RutAtencionTeclado()
 			if (tecla==START || tecla==A)
 			{
 				NivelActual = 1;
+				puntuacion = 0;
 				visualizarNivel();
 				ESTADO=MENU_SELECTOR;
 				mostrarInfo();
