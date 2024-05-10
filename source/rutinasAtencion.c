@@ -12,7 +12,6 @@ rutinasAtencion.c
 #include "menu.h"
 
 int ESTADO;	// Para controlar el estado del autómata en que esté
-int seg10;	// Para ver si pasan diez segundos
 int tiempo;	// Lleva la cuenta de los segundos que pasan
 int tick;	// Se suma uno en cada interrupción de KTimer0
 int vidas;	// Vidas restantes
@@ -47,7 +46,6 @@ void RutAtencionTeclado()
 				DibujarBloques();
 				PonerEnMarchaTempo();
 				tick = 0;
-				seg10 = 0;
 				tiempo= 0;
 				vidas = 3;
 				ESTADO=JUEGO;
@@ -151,13 +149,7 @@ void RutAtencionTempo()
 			if (tick==100)
 			{
 				tick=0;
-				seg++;
 				tiempo++;
-				if (seg==10)
-				{
-					seg=0;
-					seg10=1;
-				}
 			}
 			
 			ActualizarPelota();
