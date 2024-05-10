@@ -20,7 +20,6 @@ y en otro ejemplo de Jaeden Ameronen
 
 // Variables globales
 	int tiempo;		// ¿Esta de dónde sale?
-	int seg10;		// Para contar cada 10 segundos
 	int NivelActual;	// Nivel seleccionado en el menú de selección
 	touchPosition DatosPantalla;
 	
@@ -70,7 +69,6 @@ void juego()
 			visualizarMenuInicio();
 			//Espera a juego
 			int tic;
-			int seg10;
 			int tiempo;
 
 	// Bucle principal del juego
