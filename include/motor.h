@@ -37,7 +37,7 @@ typedef struct
 
 extern Barra barra;
 extern Pelota pelota;
-extern Bloque bloques[50];
+extern Bloque bloques[32];
 
 
 // Colisiones

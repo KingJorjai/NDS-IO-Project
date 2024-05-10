@@ -16,6 +16,7 @@ int seg10;	// Para ver si pasan diez segundos
 int tiempo;	// Lleva la cuenta de los segundos que pasan
 int tick;	// Se suma uno en cada interrupción de KTimer0
 int vidas;	// Vidas restantes
+int puntuacion;	// Puntuación del jugador
 
 void RutAtencionTeclado()
 {
@@ -28,6 +29,7 @@ void RutAtencionTeclado()
 				NivelActual=1;
 				visualizarNivel();	// Fondo
 				ESTADO=MENU_SELECTOR;
+				mostrarInfo();
 			}
 			break;
 
@@ -49,6 +51,7 @@ void RutAtencionTeclado()
 				tiempo= 0;
 				vidas = 3;
 				ESTADO=JUEGO;
+				mostrarInfo();
 			}
 			else
 			// Cambio de nivel
@@ -56,11 +59,13 @@ void RutAtencionTeclado()
 				{
 					SumarNivel();
 					visualizarNivel();
+					mostrarInfo();
 				}
 			else if (tecla == ARRIBA)
 				{
 					RestarNivel();
 					visualizarNivel();
+					mostrarInfo();
 				}
 			break;
 
@@ -73,6 +78,7 @@ void RutAtencionTeclado()
 				OcultarBloques();
 				OcultarBarra();
 				ESTADO=PAUSA_REANUDAR;
+				mostrarInfo();
 			}
 			break;
 
@@ -86,11 +92,13 @@ void RutAtencionTeclado()
 				DibujarBloques();
 				DibujarBarra();
 				ESTADO=JUEGO;
+				mostrarInfo();
 			}
 			if (tecla==ARRIBA || tecla==ABAJO)
 			{
 				visualizarPausaVolver();
 				ESTADO=PAUSA_VOLVER;
+				mostrarInfo();
 			}
 			
 			break;
@@ -99,11 +107,13 @@ void RutAtencionTeclado()
 			{
 				visualizarNivel();
 				ESTADO=MENU_SELECTOR;
+				mostrarInfo();
 			}
 			if (tecla==ARRIBA || tecla==ABAJO)
 			{
 				visualizarPausaReanudar();
 				ESTADO=PAUSA_REANUDAR;
+				mostrarInfo();
 			}
 			if (tecla==START)
 			{
@@ -113,6 +123,7 @@ void RutAtencionTeclado()
 				DibujarBloques();
 				DibujarBarra();
 				ESTADO=JUEGO;
+				mostrarInfo();
 			}
 			break;
 		
@@ -122,6 +133,7 @@ void RutAtencionTeclado()
 				NivelActual = 1;
 				visualizarNivel();
 				ESTADO=MENU_SELECTOR;
+				mostrarInfo();
 			}
 			break;
 	}
@@ -159,12 +171,15 @@ void RutAtencionTempo()
 			if(pelotaTocaLadrillo!=0 && NLadrillos>1)
 			{
 				CalcularRebote(pelotaTocaLadrillo);
+				puntuacion += 100;
+				mostrarInfo();
 			}		
 			
 			if(pelotaTocaSuelo!=0 && vidas != 0)
 			{
 				InicializarPelota();
 				vidas -= 1;
+				mostrarInfo();
 			}
 			
 			if(pelotaTocaPared!=0)

@@ -22,7 +22,7 @@
 
 int NLadrillos;
 int NLadrillosRestantes;
-Bloque bloques[50];
+Bloque bloques[32];
 
 //------------//
 // COLISIONES //

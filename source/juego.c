@@ -74,15 +74,17 @@ void juego()
 			int tiempo;
 
 	// Bucle principal del juego
+	mostrarInfo();
 	while(1)
 	{
 		// Encuesta del teclado
 		if (TeclaDetectada())
 		{
 			tecla = TeclaPulsada();
-			iprintf("\x1b[0;0HLa tecla pulsada es: %d", tecla);
+			iprintf("\x1b[20;0HLa tecla pulsada es: %d", tecla);
 
 		}
+
 
 		switch (ESTADO)
 		{
