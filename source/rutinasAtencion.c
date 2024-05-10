@@ -104,6 +104,7 @@ void RutAtencionTeclado()
 		case PAUSA_VOLVER:
 			if (tecla==A)
 			{
+				puntuacion = 0;
 				visualizarNivel();
 				ESTADO=MENU_SELECTOR;
 				mostrarInfo();
