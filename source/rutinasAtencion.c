@@ -11,6 +11,7 @@ rutinasAtencion.c
 #include "sprites.h"
 #include "motor.h"
 #include "menu.h"
+#include "consola.h"
 
 int ESTADO;	// Para controlar el estado del autómata en que esté
 int tiempo;	// Lleva la cuenta de los segundos que pasan
@@ -142,7 +143,6 @@ void RutAtencionTeclado()
 
 void RutAtencionTempo()
 {
-	static int seg=0;
 	switch (ESTADO)
 		{
 		case JUEGO:
@@ -157,8 +157,7 @@ void RutAtencionTempo()
 			ActualizarPelota();
 			DibujarPelota();
 			DibujarBarra();
-			///
-			int pelotaTocaBarra = PelotaTocaBarra();
+			PelotaTocaBarra();
 			int pelotaTocaLadrillo = PelotaTocaLadrillo();
 			int pelotaTocaPared = PelotaTocaPared();
 			int pelotaTocaSuelo = PelotaTocaSuelo();
@@ -185,6 +184,7 @@ void RutAtencionTempo()
 			
 			if(pelotaTocaSuelo!=0 && vidas==0)
 			{
+				PararTempo();
 				OcultarPelota();
 				OcultarBarra();
 				OcultarBloques();

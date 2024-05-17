@@ -4,6 +4,5 @@
 juego.h
 ---------------------------------------------------------------------------------*/
 extern void juego();
-extern int posicionX;
 extern touchPosition pos_pantalla;
 

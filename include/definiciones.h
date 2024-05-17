@@ -59,4 +59,3 @@ touchPosition PANT_DAT;
 extern int ESTADO;
 extern int NivelActual;
 extern int tiempo;
-extern int NivelActual;

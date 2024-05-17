@@ -17,6 +17,7 @@ y en otro ejemplo de Jaeden Ameronen
 #include "fondos.h"
 #include "menu.h"
 #include "motor.h"
+#include "consola.h"
 
 // Variables globales
 	int tiempo;		// ¿Esta de dónde sale?
@@ -32,14 +33,9 @@ void juego()
 {	
 	// Definiciones de variables
 	int tecla = -1;
-	touchPosition pos_pantalla;
 	// Estado inicial
 	ESTADO=MENU_INICIO;
 	visualizarMenuInicio();
-	NivelActual = 1;
-
-	//vidas
-	int vidas;
 
 	// Configuración interrupciones
 		
@@ -64,13 +60,6 @@ void juego()
 			ConfigurarTeclado(conf_Tec);
 			HabilitarIntTeclado();
 
-
-			//Entrada menu inicio
-			visualizarMenuInicio();
-			//Espera a juego
-			int tic;
-			int tiempo;
-
 	// Bucle principal del juego
 	mostrarInfo();
 	while(1)
@@ -80,7 +69,6 @@ void juego()
 		{
 			tecla = TeclaPulsada();
 			iprintf("\x1b[20;0HLa tecla pulsada es: %d", tecla);
-
 		}
 
 
@@ -109,9 +97,9 @@ void juego()
 						{
 							barra.x += BARRA_VX;
 						}
+						break;
 					}
 				}
-				
 				break;
 		}
 
