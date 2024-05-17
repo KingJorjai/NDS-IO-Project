@@ -30,6 +30,9 @@ definiciones.h
 // Acceso a los registros de la pantalla táctil
 touchPosition PANT_DAT;
 
+#define ANCHO_PANTALLA 256
+#define ALTO_PANTALLA 192
+
 // Nombres asignados a las teclas para facilitar la comprensión de nuestro código
 
 #define A			0 
@@ -44,9 +47,15 @@ touchPosition PANT_DAT;
 #define L			9
 
 // Nombres asignados a los estados
-#define ESPERA 0
-#define CERRADA 1
-#define ABIERTA 2
+#define MENU_INICIO 0
+#define MENU_SELECTOR 1
+#define JUEGO 2
+#define PAUSA_REANUDAR 3
+#define PAUSA_VOLVER 4
+#define PERDER 5
+#define GANAR 6
 
+// Variables globales
 extern int ESTADO;
-
+extern int NivelActual;
+extern int tiempo;

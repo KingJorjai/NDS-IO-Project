@@ -21,6 +21,7 @@ int main(void) {
 //---------------------------------------------------------------------------------
 
 	inicializarGraficosSprites();
+	EstablecerPaletaPrincipal();
 	HabilitarInterrupciones();
 
 	// Llamada al juego que vosotros programaréis
